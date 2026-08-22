@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-22T16:30:15.6282828Z",
+  "title": "Design System: PawFriend",
+  "extensions": {
+    "colorMeta": {
+      "recycled-paper": {
+        "role": "neutral",
+        "displayName": "Recycled Paper",
+        "canonical": "#f5edde",
+        "tonalRamp": ["color-mix(in srgb, #f5edde 30%, black)", "color-mix(in srgb, #f5edde 45%, black)", "color-mix(in srgb, #f5edde 60%, black)", "color-mix(in srgb, #f5edde 75%, black)", "#f5edde", "color-mix(in srgb, #f5edde 75%, white)", "color-mix(in srgb, #f5edde 50%, white)", "color-mix(in srgb, #f5edde 20%, white)"]
+      },
+      "deep-paper": {
+        "role": "neutral",
+        "displayName": "Deep Paper",
+        "canonical": "#eadfcd",
+        "tonalRamp": ["color-mix(in srgb, #eadfcd 30%, black)", "color-mix(in srgb, #eadfcd 45%, black)", "color-mix(in srgb, #eadfcd 60%, black)", "color-mix(in srgb, #eadfcd 75%, black)", "#eadfcd", "color-mix(in srgb, #eadfcd 75%, white)", "color-mix(in srgb, #eadfcd 50%, white)", "color-mix(in srgb, #eadfcd 20%, white)"]
+      },
+      "contact-paper": {
+        "role": "neutral",
+        "displayName": "Contact Paper",
+        "canonical": "#ede3d2",
+        "tonalRamp": ["color-mix(in srgb, #ede3d2 30%, black)", "color-mix(in srgb, #ede3d2 45%, black)", "color-mix(in srgb, #ede3d2 60%, black)", "color-mix(in srgb, #ede3d2 75%, black)", "#ede3d2", "color-mix(in srgb, #ede3d2 75%, white)", "color-mix(in srgb, #ede3d2 50%, white)", "color-mix(in srgb, #ede3d2 20%, white)"]
+      },
+      "story-paper": {
+        "role": "neutral",
+        "displayName": "Story Paper",
+        "canonical": "#eee4d4",
+        "tonalRamp": ["color-mix(in srgb, #eee4d4 30%, black)", "color-mix(in srgb, #eee4d4 45%, black)", "color-mix(in srgb, #eee4d4 60%, black)", "color-mix(in srgb, #eee4d4 75%, black)", "#eee4d4", "color-mix(in srgb, #eee4d4 75%, white)", "color-mix(in srgb, #eee4d4 50%, white)", "color-mix(in srgb, #eee4d4 20%, white)"]
+      },
+      "ink": {
+        "role": "primary",
+        "displayName": "Shelter Ink",
+        "canonical": "#121314",
+        "tonalRamp": ["color-mix(in srgb, #121314 30%, black)", "color-mix(in srgb, #121314 45%, black)", "color-mix(in srgb, #121314 60%, black)", "color-mix(in srgb, #121314 75%, black)", "#121314", "color-mix(in srgb, #121314 75%, white)", "color-mix(in srgb, #121314 50%, white)", "color-mix(in srgb, #121314 20%, white)"]
+      },
+      "safety-orange": {
+        "role": "primary",
+        "displayName": "Safety Orange",
+        "canonical": "#ef6c1b",
+        "tonalRamp": ["color-mix(in srgb, #ef6c1b 30%, black)", "color-mix(in srgb, #ef6c1b 45%, black)", "color-mix(in srgb, #ef6c1b 60%, black)", "color-mix(in srgb, #ef6c1b 75%, black)", "#ef6c1b", "color-mix(in srgb, #ef6c1b 75%, white)", "color-mix(in srgb, #ef6c1b 50%, white)", "color-mix(in srgb, #ef6c1b 20%, white)"]
+      },
+      "adoption-lime": {
+        "role": "secondary",
+        "displayName": "Adoption Lime",
+        "canonical": "#d9ef42",
+        "tonalRamp": ["color-mix(in srgb, #d9ef42 30%, black)", "color-mix(in srgb, #d9ef42 45%, black)", "color-mix(in srgb, #d9ef42 60%, black)", "color-mix(in srgb, #d9ef42 75%, black)", "#d9ef42", "color-mix(in srgb, #d9ef42 75%, white)", "color-mix(in srgb, #d9ef42 50%, white)", "color-mix(in srgb, #d9ef42 20%, white)"]
+      },
+      "warm-pink": {
+        "role": "secondary",
+        "displayName": "Warm Pink",
+        "canonical": "#efa4b4",
+        "tonalRamp": ["color-mix(in srgb, #efa4b4 30%, black)", "color-mix(in srgb, #efa4b4 45%, black)", "color-mix(in srgb, #efa4b4 60%, black)", "color-mix(in srgb, #efa4b4 75%, black)", "#efa4b4", "color-mix(in srgb, #efa4b4 75%, white)", "color-mix(in srgb, #efa4b4 50%, white)", "color-mix(in srgb, #efa4b4 20%, white)"]
+      },
+      "soft-blue": {
+        "role": "secondary",
+        "displayName": "Soft Blue",
+        "canonical": "#a9d4ee",
+        "tonalRamp": ["color-mix(in srgb, #a9d4ee 30%, black)", "color-mix(in srgb, #a9d4ee 45%, black)", "color-mix(in srgb, #a9d4ee 60%, black)", "color-mix(in srgb, #a9d4ee 75%, black)", "#a9d4ee", "color-mix(in srgb, #a9d4ee 75%, white)", "color-mix(in srgb, #a9d4ee 50%, white)", "color-mix(in srgb, #a9d4ee 20%, white)"]
+      },
+      "editorial-line": {
+        "role": "neutral",
+        "displayName": "Editorial Line",
+        "canonical": "color-mix(in srgb, #121314 24%, transparent)",
+        "tonalRamp": ["rgba(18,19,20,0.12)", "rgba(18,19,20,0.18)", "rgba(18,19,20,0.24)", "rgba(18,19,20,0.32)", "rgba(18,19,20,0.42)", "rgba(18,19,20,0.56)", "rgba(18,19,20,0.72)", "#121314"]
+      },
+      "focus-blue": {
+        "role": "tertiary",
+        "displayName": "Focus Blue",
+        "canonical": "#2e64ff",
+        "tonalRamp": ["color-mix(in srgb, #2e64ff 30%, black)", "color-mix(in srgb, #2e64ff 45%, black)", "color-mix(in srgb, #2e64ff 60%, black)", "color-mix(in srgb, #2e64ff 75%, black)", "#2e64ff", "color-mix(in srgb, #2e64ff 75%, white)", "color-mix(in srgb, #2e64ff 50%, white)", "color-mix(in srgb, #2e64ff 20%, white)"]
+      }
+    },
+    "typographyMeta": {
+      "hero": { "displayName": "Hero Poster", "purpose": "The exact three-line first-viewport headline." },
+      "display": { "displayName": "Condensed Display", "purpose": "Section headlines, proof numerals, and journey numbers." },
+      "editorial-serif": { "displayName": "Editorial Serif", "purpose": "The intimate introduction-band change of voice." },
+      "body": { "displayName": "Plainspoken Body", "purpose": "Practical adoption descriptions and disclosures." },
+      "label": { "displayName": "Utility Label", "purpose": "Navigation, metadata, CTA labels, pet labels, and compact status copy." },
+      "annotation": { "displayName": "Volunteer Note", "purpose": "Rare names, arrows, and human asides." }
+    },
+    "shadows": [
+      { "name": "cta-hover", "value": "0 10px 24px color-mix(in srgb, var(--ink) 20%, transparent)", "purpose": "Brief feedback beneath the primary CTA on hover." },
+      { "name": "paper-rest", "value": "0 16px 28px color-mix(in srgb, var(--ink) 14%, transparent)", "purpose": "Shallow lift for resident contact prints." },
+      { "name": "paper-hover", "value": "0 28px 44px color-mix(in srgb, var(--ink) 20%, transparent)", "purpose": "Raised resident print on hover." },
+      { "name": "portrait-drop", "value": "drop-shadow(0 18px 20px color-mix(in srgb, var(--ink) 20%, transparent))", "purpose": "Separates clean-alpha pet cutouts from flat color swipes." }
+    ],
+    "motion": [
+      { "name": "ease-editorial-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default transform and emphasis easing." },
+      { "name": "hero-lines", "value": "1.1s, 0.09s stagger, expo.out", "purpose": "Reveals the exact hero headline without delaying comprehension." },
+      { "name": "hero-portrait", "value": "1.2s, 0.12s delay, expo.out", "purpose": "Introduces Milo as the first-view protagonist." },
+      { "name": "section-reveal", "value": "0.9s, expo.out", "purpose": "One-time 28px clipped reveal when a major section heading reaches 86% of the viewport." },
+      { "name": "hero-handoff", "value": "scrub 0.75", "purpose": "Fine-pointer desktop page-rise from Milo's hero into the introduction." },
+      { "name": "resident-pin", "value": "scrub 0.7", "purpose": "Desktop-only horizontal contact-sheet travel." },
+      { "name": "fit-handoff", "value": "scrub 0.8", "purpose": "Fine-pointer desktop sideways reveal from personality into the adoption journey." },
+      { "name": "journey-progress", "value": "scrub 0.6", "purpose": "Desktop-only lime connection line." },
+      { "name": "catalog-section", "value": "320ms, ease-editorial-out", "purpose": "Short opacity and vertical reveal when the complete resident catalog opens." },
+      { "name": "reduced-motion", "value": "120ms state transitions; narrative transforms removed; content forced visible", "purpose": "Complete calm experience with no hidden content or pinned travel." }
+    ],
+    "breakpoints": [
+      { "name": "wide-reflow", "value": "1120px" },
+      { "name": "touch-layout", "value": "899px" },
+      { "name": "catalog-single-column", "value": "640px" },
+      { "name": "compact-mobile", "value": "520px" },
+      { "name": "fine-pointer-motion", "value": "900px with hover:hover and pointer:fine" }
+    ],
+    "assetProvenance": {
+      "approvedComp": ".impeccable/mocks/pawfriend-comp-b-approved.png",
+      "approvedCompPrompt": ".impeccable/mocks/pawfriend-comp-b-approved.json",
+      "seed": "6c948c11",
+      "heroManifest": ".impeccable/asset-manifest-hero.md",
+      "residentManifest": ".impeccable/asset-manifest-residents.md",
+      "storyManifest": ".impeccable/asset-manifest-story.md",
+      "residentPngMetadata": "impeccable:prompt",
+      "storyPngMetadata": "PNG tEXt"
+    },
+    "implementationContract": {
+      "thesis": "Every pet is a person, not inventory.",
+      "world": "Tactile adoption zine × portrait contact sheet.",
+      "story": ["intro", "featured residents", "complete catalog", "personality", "journey", "patient match", "preparation", "FAQ", "mission", "CTA"],
+      "firstViewport": "Exact headline 'Find your new best friend', oversized Milo portrait, handwritten note, proof cluster, and primary CTA.",
+      "motionRuntime": "GSAP + ScrollTrigger dynamically imported after the critical interface; gsap.context and gsap.matchMedia cleanup; no Lenis.",
+      "residentFlow": "Five featured contact prints, expandable nine-resident catalog, persistent favorites, save notices, and a focus-managed shortlist dialog.",
+      "productionMetadata": "Canonical URLs, Open Graph, Twitter, JSON-LD, conditional robots, sitemap, manifest, privacy, and accessibility pages.",
+      "reviewDisposition": "APPROVED after responsive, motion, typography, truth, shortlist, catalog, performance, accessibility, and production-hardening passes."
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Adoption CTA",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The dominant outcome control for meeting pets.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#residents\"><span>MEET THE PETS</span><span aria-hidden=\"true\">→</span></a>",
+      "css": ".ds-btn-primary { display:inline-flex; align-items:center; justify-content:space-between; gap:24px; min-height:48px; width:max-content; padding:12px 16px 12px 20px; color:var(--paper); background:var(--ink); border:1px solid var(--ink); border-radius:2px; font-family:var(--font-body-face); font-size:12px; font-weight:800; letter-spacing:.06em; text-decoration:none; text-transform:uppercase; transition:color 180ms ease,background-color 180ms ease,box-shadow 240ms var(--ease-out),transform 240ms var(--ease-out); } .ds-btn-primary:hover { color:var(--ink); background:var(--lime); box-shadow:0 10px 24px color-mix(in srgb,var(--ink) 20%,transparent); } .ds-btn-primary:focus-visible { outline:3px solid var(--focus); outline-offset:4px; }"
+    },
+    {
+      "name": "Header Adoption CTA",
+      "kind": "button",
+      "refersTo": "button-header",
+      "description": "Inverse CTA used only inside the sticky ink header.",
+      "html": "<a class=\"ds-btn-header\" href=\"#residents\"><span>MEET THE PETS</span><span aria-hidden=\"true\">→</span></a>",
+      "css": ".ds-btn-header { display:inline-flex; align-items:center; justify-content:space-between; gap:24px; min-height:48px; width:max-content; padding:12px 16px 12px 20px; color:var(--ink); background:var(--paper); border:1px solid var(--paper); border-radius:2px; font-family:var(--font-body-face); font-size:12px; font-weight:800; letter-spacing:.06em; text-decoration:none; text-transform:uppercase; transition:color 180ms ease,background-color 180ms ease,box-shadow 240ms var(--ease-out); } .ds-btn-header:hover { color:var(--ink); background:var(--lime); border-color:var(--ink); } .ds-btn-header:focus-visible { outline:3px solid var(--focus); outline-offset:4px; }"
+    },
+    {
+      "name": "Circular Icon Control",
+      "kind": "button",
+      "refersTo": "button-icon",
+      "description": "Previous, next, favorite, and social controls with a 44–48px target.",
+      "html": "<button class=\"ds-icon-button\" type=\"button\" aria-label=\"View next resident\"><span aria-hidden=\"true\">→</span></button>",
+      "css": ".ds-icon-button { display:grid; place-items:center; width:48px; height:48px; padding:0; color:var(--paper); background:var(--ink); border:1px solid var(--ink); border-radius:50%; cursor:pointer; transition:transform 180ms var(--ease-out),background-color 180ms ease; } .ds-icon-button:hover { color:var(--ink); background:var(--lime); transform:scale(1.06); } .ds-icon-button:focus-visible { outline:3px solid var(--focus); outline-offset:4px; } .ds-icon-button:active { transform:scale(.98); }"
+    },
+    {
+      "name": "Editorial Navigation Link",
+      "kind": "nav",
+      "description": "Compact uppercase navigation with a directional lime underline.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Preview navigation\"><a href=\"#residents\">MEET THE PETS</a><a href=\"#journey\">HOW IT WORKS</a></nav>",
+      "css": ".ds-nav { display:flex; align-items:center; gap:32px; padding:16px 24px; color:var(--paper); background:var(--ink); } .ds-nav a { position:relative; min-height:44px; display:inline-flex; align-items:center; color:inherit; font-family:var(--font-body-face); font-size:12px; font-weight:700; letter-spacing:.06em; text-decoration:none; text-transform:uppercase; } .ds-nav a::after { position:absolute; right:0; bottom:4px; left:0; height:2px; content:\"\"; background:var(--lime); transform:scaleX(0); transform-origin:right; transition:transform 260ms var(--ease-out); } .ds-nav a:hover::after { transform:scaleX(1); transform-origin:left; } .ds-nav a:focus-visible { outline:3px solid var(--focus); outline-offset:4px; }"
+    },
+    {
+      "name": "Resident Contact Card",
+      "kind": "card",
+      "refersTo": "contact-card",
+      "description": "A personality-led contact print for one resident, never an inventory tile.",
+      "html": "<article class=\"ds-pet-card\"><span class=\"ds-pet-label\">MILO</span><div class=\"ds-pet-photo\" role=\"img\" aria-label=\"Portrait area for Milo\"></div><p class=\"ds-pet-meta\">2 YEARS · MIXED BREED</p><h3>Professional tennis-ball destroyer</h3><p>Fast zoomies. Soft heart. Will trade one sock for a snack.</p><div class=\"ds-pet-actions\"><a href=\"#prepare\">PLAN A MEETING</a><button type=\"button\" aria-label=\"Save Milo to favorites\">♡</button></div></article>",
+      "css": ".ds-pet-card { position:relative; display:flex; flex-direction:column; width:320px; min-height:520px; padding:16px; color:var(--ink); background:#ede3d2; box-shadow:0 16px 28px color-mix(in srgb,var(--ink) 14%,transparent); transform:rotate(-2deg); transition:transform 360ms var(--ease-out),box-shadow 360ms var(--ease-out); } .ds-pet-card:hover { box-shadow:0 28px 44px color-mix(in srgb,var(--ink) 20%,transparent); transform:rotate(0) translateY(-12px); } .ds-pet-photo { aspect-ratio:1; margin-bottom:20px; background:var(--paper-deep); } .ds-pet-label { position:absolute; top:4px; left:24px; padding:7px 14px; background:var(--lime); font:900 14px/1.2 var(--font-body-face); letter-spacing:.04em; transform:rotate(-2deg); } .ds-pet-meta { margin:0 0 12px; font:700 11px/1.2 var(--font-body-face); letter-spacing:.04em; } .ds-pet-card h3 { margin:0 0 8px; font-size:18px; line-height:1.15; } .ds-pet-card p { font-size:13px; line-height:1.45; } .ds-pet-card a { min-height:44px; margin-top:auto; display:inline-flex; align-items:center; color:var(--ink); font-size:11px; font-weight:900; letter-spacing:.05em; } .ds-pet-card a:focus-visible { outline:3px solid var(--focus); outline-offset:4px; }"
+    },
+    {
+      "name": "Personality Proof Cluster",
+      "kind": "custom",
+      "description": "Overlapping portraits paired with personality-first shortlist guidance instead of an unverified shelter total.",
+      "html": "<div class=\"ds-proof\"><div class=\"ds-proof-portraits\" aria-hidden=\"true\"><span></span><span></span><span></span></div><div><p><strong>START WITH FIT.</strong><span>Save the pets who feel like your kind of weird.</span></p><small>YOUR SHORTLIST STAYS ON THIS DEVICE.</small></div></div>",
+      "css": ".ds-proof { display:flex; align-items:center; gap:18px; color:var(--ink); } .ds-proof-portraits { display:flex; } .ds-proof-portraits span { width:40px; height:40px; background:var(--paper-deep); border:3px solid var(--orange); border-radius:50%; } .ds-proof-portraits span+span { margin-left:-16px; } .ds-proof p { display:flex; align-items:center; gap:10px; margin:0; } .ds-proof strong { max-width:8ch; font:400 32px/.9 var(--font-display-face); } .ds-proof p span { max-width:16ch; font-size:13px; line-height:1.25; } .ds-proof small { display:block; margin-top:6px; font-size:10px; font-weight:800; letter-spacing:.08em; line-height:1.25; }"
+    },
+    {
+      "name": "Complete Resident Catalog",
+      "kind": "custom",
+      "description": "Expandable equal-height grid that exposes all nine resident profiles without replacing the authored featured contact sheet.",
+      "html": "<section class=\"ds-catalog\"><h2>ALL RESIDENTS.</h2><p>Compare personalities, save the ones who fit, and bring your questions.</p><div><article>MILO</article><article>LUNA</article><article>PEPPER</article></div></section>",
+      "css": ".ds-catalog { padding:48px; color:var(--ink); background:var(--paper-deep); border-block:1px solid var(--ink); } .ds-catalog h2 { margin:0; font:400 72px/.88 var(--font-display-face); } .ds-catalog>p { max-width:42ch; } .ds-catalog>div { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; margin-top:32px; } .ds-catalog article { min-height:220px; padding:16px; background:var(--paper); border:1px solid var(--ink); box-shadow:8px 8px 0 color-mix(in srgb,var(--ink) 14%,var(--paper-deep)); font-weight:900; }"
+    },
+    {
+      "name": "Saved Pets Dialog",
+      "kind": "custom",
+      "description": "Focus-managed ink-and-lime shortlist drawer with empty, populated, remove, disabled, and share states.",
+      "html": "<aside class=\"ds-shortlist\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"ds-shortlist-title\"><header><div><small>2 SAVED</small><h2 id=\"ds-shortlist-title\">THE PETS YOU PAUSED FOR.</h2></div><button aria-label=\"Close saved pets\">×</button></header><article>PEPPER <button aria-label=\"Remove Pepper\">×</button></article><footer>SAVED ON THIS DEVICE. <button>SHARE MY SHORTLIST</button></footer></aside>",
+      "css": ".ds-shortlist { display:flex; flex-direction:column; width:min(440px,100%); min-height:560px; color:var(--ink); background:var(--paper); border:1px solid var(--ink); box-shadow:-24px 0 52px color-mix(in srgb,var(--ink) 22%,transparent); } .ds-shortlist header { display:flex; justify-content:space-between; padding:24px; background:var(--lime); } .ds-shortlist h2 { max-width:9ch; margin:4px 0 0; font:400 42px/.92 var(--font-display-face); } .ds-shortlist button { min-width:44px; min-height:44px; border:1px solid var(--ink); background:transparent; } .ds-shortlist article { display:flex; justify-content:space-between; align-items:center; padding:18px 24px; border-bottom:1px solid var(--line); font-weight:900; } .ds-shortlist footer { display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding:20px 24px; color:var(--paper); background:var(--ink); } .ds-shortlist footer button { padding:12px 18px; color:var(--ink); background:var(--lime); }"
+    },
+    {
+      "name": "Journey Number",
+      "kind": "custom",
+      "description": "Square lime step marker that sits directly on the connected ink journey.",
+      "html": "<div class=\"ds-journey\"><span class=\"ds-journey-number\">01</span><h3>Meet someone.</h3><p>Start with personality, pace, and the kind of home you share.</p></div>",
+      "css": ".ds-journey { padding:20px; color:var(--paper); background:var(--ink); } .ds-journey-number { display:grid; place-items:center; width:80px; height:80px; margin-bottom:24px; color:var(--ink); background:var(--lime); border:8px solid var(--ink); font:400 46px/1 var(--font-display-face); font-variant-numeric:tabular-nums; } .ds-journey h3 { margin:0 0 8px; font-size:22px; line-height:1.1; } .ds-journey p { max-width:28ch; margin:0; color:color-mix(in srgb,var(--paper) 76%,transparent); font-size:13px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Portrait Contact Zine",
+    "overview": "PawFriend treats every pet as a person, not inventory. Its visual world is a tactile adoption zine crossed with a portrait-studio contact sheet: warm recycled paper, hard ink seams, oversized compressed type, candid pet photography, taped labels, and a few handwritten observations that feel human rather than cute-by-default.\n\nThe system is humane, cheeky, direct, editorial, and unmistakably adoption-specific. It uses asymmetry and scale to give animals presence, while plain language, practical preparation, and an availability reminder keep emotion from turning into false evidence. The landing-page story moves from introduction → featured residents → complete catalog → personality → journey → patient-match story → visitor preparation → FAQ → mission → CTA; this is the canonical persuasive rhythm, not a generic page template.",
+    "keyCharacteristics": [
+      "Pet portraits are the protagonists; UI supports recognition and choice.",
+      "Warm paper, black ink, safety orange, and small highlighter accents create a tactile print world.",
+      "Condensed display type carries urgency; Archivo carries clarity; Caveat is a rare human annotation.",
+      "Square editorial bands and imperfect contact prints outrank rounded digital cards.",
+      "Motion reveals hierarchy and state, then disappears on touch and reduced-motion paths.",
+      "Availability-sensitive profile details are framed for confirmation without interrupting the visitor's emotional journey."
+    ],
+    "rules": [
+      { "name": "The Personhood Rule", "body": "Lead with a pet's face, name, and personality; never reduce residents to interchangeable inventory tiles.", "section": "overview" },
+      { "name": "The Flat-Ink Rule", "body": "Use solid color fields and 1px editorial seams; do not introduce gradients, glass, or translucent decorative surfaces.", "section": "colors" },
+      { "name": "The Highlighter Rule", "body": "Lime is a small directional signal, not a background wash for whole sections.", "section": "colors" },
+      { "name": "The Three-Voice Rule", "body": "Anton persuades, Archivo explains, and Caveat reacts; do not let any one voice perform another's job.", "section": "typography" },
+      { "name": "The Band-and-Break Rule", "body": "Build rhythm with full-width bands and intentional subject overlap, not nested containers floating in empty space.", "section": "layout" },
+      { "name": "The Paper-Only Shadow Rule", "body": "Shadows belong to physical-feeling prints, cutout portraits, and active CTA feedback; never use them to make generic floating panels.", "section": "elevation" },
+      { "name": "The Circle-With-A-Job Rule", "body": "A circle must be an icon control, portrait proof, or explicit annotation; it is never a default container shape.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do preserve the thesis that every pet is a person, not inventory.",
+      "Do keep “Meet the pets” as the obvious primary outcome within five seconds and show it directly below the headline on mobile.",
+      "Do use portrait-led asymmetry, hard editorial seams, square paper surfaces, and restrained handwritten notes.",
+      "Do gate pinned scrolling, magnetic response, and heavy parallax to fine-pointer desktop contexts.",
+      "Do make the complete experience readable and operable with motion disabled, touch input, or keyboard input.",
+      "Do avoid invented proof, retain the discreet footer reminder that profile details and availability should be confirmed, and preserve prompt provenance for every generated raster."
+    ],
+    "donts": [
+      "Don't use generic SaaS grids, glassmorphism, blue-purple gradients, excessive rounding, random blobs, or symmetrical template layouts.",
+      "Don't turn local resident content, statistics, addresses, contact details, testimonials, or outcomes into verified claims.",
+      "Don't hide content behind animation, pin horizontal content on touch, or apply magnetic effects to coarse pointers.",
+      "Don't introduce Lenis unless the user explicitly requests it or measured evidence proves it necessary.",
+      "Don't add motion, decoration, or copy that competes with the animals or weakens the adoption-specific story."
+    ]
+  }
+}
