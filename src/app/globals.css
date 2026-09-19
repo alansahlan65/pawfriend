@@ -17,6 +17,7 @@
   --page-gutter: clamp(24px, 4vw, 64px);
   --section-space: clamp(80px, 9vw, 128px);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-pop: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -134,7 +135,6 @@ button {
   transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
 }
 
-.shortlist-trigger:hover,
 .shortlist-trigger[aria-expanded="true"] {
   color: var(--ink);
   background: var(--lime);
@@ -157,7 +157,6 @@ button {
   font-variant-numeric: tabular-nums;
 }
 
-.shortlist-trigger:hover strong,
 .shortlist-trigger[aria-expanded="true"] strong {
   color: var(--paper);
   background: var(--ink);
@@ -206,12 +205,6 @@ button {
   transition: transform 260ms var(--ease-out);
 }
 
-.desktop-nav a:hover::after,
-.footer-links a:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
 .button-link {
   --magnet-x: 0px;
   --magnet-y: 0px;
@@ -247,10 +240,6 @@ button {
 
 .button-link svg {
   transition: transform 240ms var(--ease-out);
-}
-
-.button-link:hover svg {
-  transform: translateX(4px);
 }
 
 .header-cta {
@@ -494,7 +483,17 @@ button {
   background: var(--paper);
   border-left: 1px solid var(--ink);
   box-shadow: -24px 0 52px color-mix(in srgb, var(--ink) 22%, transparent);
-  animation: shortlist-in 360ms var(--ease-out) both;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(100%);
+  transition: transform 200ms var(--ease-out), opacity 200ms ease;
+}
+
+.shortlist-panel.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+  transition: transform 280ms var(--ease-drawer), opacity 280ms ease;
 }
 
 .shortlist-backdrop {
@@ -502,21 +501,20 @@ button {
   inset: 64px 0 0;
   z-index: 57;
   background: color-mix(in srgb, var(--ink) 42%, transparent);
-  animation: shortlist-backdrop-in 180ms ease-out both;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-out);
 }
 
-@keyframes shortlist-backdrop-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.shortlist-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 280ms var(--ease-drawer);
 }
 
-@keyframes shortlist-in {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
+.shortlist-panel.is-instant,
+.shortlist-backdrop.is-instant {
+  transition: none;
 }
 
 .shortlist-heading {
@@ -703,11 +701,6 @@ button {
   text-transform: uppercase;
 }
 
-.text-link:hover svg,
-.ink-link:hover svg {
-  transform: translateX(4px);
-}
-
 .text-link svg,
 .ink-link svg {
   transition: transform 200ms var(--ease-out);
@@ -822,10 +815,6 @@ button {
   cursor: pointer;
 }
 
-.catalog-trigger[aria-expanded="true"]:hover svg {
-  transform: translateX(-4px);
-}
-
 .gallery-controls button,
 .pet-actions button,
 .social-links a,
@@ -841,14 +830,6 @@ button {
   border-radius: 50%;
   cursor: pointer;
   transition: transform 180ms var(--ease-out), background-color 180ms ease;
-}
-
-.gallery-controls button:hover,
-.social-links a:hover,
-.social-links button:hover {
-  color: var(--ink);
-  background: var(--lime);
-  transform: scale(1.06);
 }
 
 .resident-scroller {
@@ -886,12 +867,6 @@ button {
   transform: rotate(2.5deg);
 }
 
-.pet-card:hover {
-  z-index: 3;
-  box-shadow: 0 28px 44px color-mix(in srgb, var(--ink) 20%, transparent);
-  transform: rotate(0) translateY(-12px);
-}
-
 .pet-label,
 .otis-label {
   position: absolute;
@@ -924,10 +899,6 @@ button {
 .pet-photo img {
   object-fit: cover;
   transition: transform 600ms var(--ease-out);
-}
-
-.pet-card:hover .pet-photo img {
-  transform: scale(1.05);
 }
 
 .pet-meta {
@@ -1041,12 +1012,6 @@ button {
   transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
 }
 
-.catalog-pet-card:hover {
-  z-index: 2;
-  box-shadow: 12px 12px 0 var(--orange);
-  transform: translate(-4px, -4px);
-}
-
 .catalog-pet-card .pet-photo {
   aspect-ratio: 4 / 3;
   margin-bottom: 16px;
@@ -1055,10 +1020,6 @@ button {
 .catalog-pet-card-miso .pet-photo img {
   object-fit: contain;
   object-position: center bottom;
-}
-
-.catalog-pet-card:hover .pet-photo img {
-  transform: scale(1.04);
 }
 
 .catalog-pet-card h3 {
@@ -1080,10 +1041,6 @@ button {
 .catalog-back {
   margin-top: 48px;
   cursor: pointer;
-}
-
-.catalog-back:hover svg {
-  transform: translateX(-4px);
 }
 
 @keyframes catalog-section-in {
@@ -1363,7 +1320,6 @@ button {
   min-height: 0;
   margin: 0 -24px 24px;
   overflow: hidden;
-  filter: grayscale(1) contrast(1.08);
 }
 
 .journey-image::after {
@@ -1376,12 +1332,8 @@ button {
 
 .journey-image img {
   object-fit: cover;
+  filter: grayscale(1) contrast(1.08);
   transition: transform 700ms var(--ease-out), filter 500ms ease;
-}
-
-.journey-step:hover .journey-image img {
-  transform: scale(1.05);
-  filter: grayscale(0);
 }
 
 .journey-step h3 {
@@ -1991,6 +1943,69 @@ button {
   flex: 0 0 auto;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .shortlist-trigger:hover {
+    color: var(--ink);
+    background: var(--lime);
+    border-color: var(--lime);
+  }
+
+  .shortlist-trigger:hover strong {
+    color: var(--paper);
+    background: var(--ink);
+  }
+
+  .desktop-nav a:hover::after,
+  .footer-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .button-link:hover svg,
+  .text-link:hover svg,
+  .ink-link:hover svg {
+    transform: translateX(4px);
+  }
+
+  .catalog-trigger[aria-expanded="true"]:hover svg,
+  .catalog-back:hover svg {
+    transform: translateX(-4px);
+  }
+
+  .gallery-controls button:hover,
+  .social-links a:hover,
+  .social-links button:hover {
+    color: var(--ink);
+    background: var(--lime);
+    transform: scale(1.06);
+  }
+
+  .pet-card:hover {
+    z-index: 3;
+    box-shadow: 0 28px 44px color-mix(in srgb, var(--ink) 20%, transparent);
+    transform: rotate(0) translateY(-12px);
+  }
+
+  .pet-card:hover .pet-photo img {
+    transform: scale(1.05);
+  }
+
+  .catalog-pet-card:hover {
+    z-index: 2;
+    box-shadow: 12px 12px 0 var(--orange);
+    transform: translate(-4px, -4px);
+  }
+
+  .catalog-pet-card:hover .pet-photo img {
+    transform: scale(1.04);
+  }
+
+  .journey-step:hover .journey-image img {
+    filter: grayscale(0) contrast(1);
+    transform: scale(1.05);
+  }
+}
+
 .status-toast {
   position: fixed;
   right: 24px;
@@ -2375,17 +2390,21 @@ button {
     color: var(--paper);
     background: var(--ink);
     border-top: 1px solid color-mix(in srgb, var(--paper) 18%, transparent);
-    transform: scaleY(0);
-    transform-origin: top;
+    transform: translateY(-8px) scale(0.97);
+    transform-origin: top right;
     opacity: 0;
     visibility: hidden;
-    transition: transform 260ms var(--ease-out), opacity 180ms ease, visibility 180ms;
+    transition: transform 200ms var(--ease-out), opacity 160ms ease, visibility 160ms;
   }
 
   .mobile-menu.is-open {
-    transform: scaleY(1);
+    transform: translateY(0) scale(1);
     opacity: 1;
     visibility: visible;
+  }
+
+  .mobile-menu.is-instant {
+    transition: none;
   }
 
   .mobile-menu a,
@@ -2770,16 +2789,66 @@ button {
     scroll-behavior: auto;
   }
 
-  .button-link,
+  .button-link {
+    --magnet-x: 0px !important;
+    --magnet-y: 0px !important;
+    transform: none !important;
+    transition: color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
+  }
+
   .button-link svg,
+  .text-link svg,
+  .ink-link svg {
+    transform: none !important;
+    transition: none;
+  }
+
   .desktop-nav a::after,
   .footer-links a::after,
-  .text-link svg,
-  .ink-link svg,
   .pet-card,
-  .journey-image img,
-  .faq-list summary svg,
+  .faq-list summary svg {
+    transition-duration: 120ms !important;
+  }
+
+  .journey-image img {
+    transform: none !important;
+    transition: filter 120ms ease;
+  }
+
+  .resident-catalog,
+  .catalog-pet-card {
+    animation: none !important;
+  }
+
+  .mobile-menu,
+  .mobile-menu.is-open {
+    transform: none;
+    transition: opacity 120ms ease, visibility 120ms;
+  }
+
   .status-toast,
+  .status-toast.is-visible {
+    transform: none;
+    transition: opacity 120ms ease;
+  }
+
+  .shortlist-panel,
+  .shortlist-panel.is-open {
+    transform: none;
+    transition: opacity 120ms ease;
+  }
+
+  .shortlist-backdrop,
+  .shortlist-backdrop.is-open {
+    transition: opacity 120ms ease;
+  }
+
+  .shortlist-panel.is-instant,
+  .shortlist-backdrop.is-instant,
+  .mobile-menu.is-instant {
+    transition: none;
+  }
+
   .save-notice {
     transition-duration: 120ms !important;
   }
@@ -2787,11 +2856,6 @@ button {
   .save-notice,
   .save-notice::after {
     animation: none !important;
-  }
-
-  .shortlist-backdrop,
-  .shortlist-panel {
-    animation: none;
   }
 
   .hero-dog,

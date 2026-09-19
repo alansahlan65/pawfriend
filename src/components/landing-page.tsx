@@ -12,7 +12,7 @@ import {
   Share2,
   X,
 } from "lucide-react";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   adoptionFaqs,
   journey,
@@ -35,9 +35,17 @@ type SaveNotice = {
   sequence: number;
 };
 
+function scrollBehaviorForClick(detail: number): ScrollBehavior {
+  return detail === 0 || window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? "auto"
+    : "smooth";
+}
+
 function MagneticLink({ href, children, className = "" }: MagneticLinkProps) {
   const move = (event: React.PointerEvent<HTMLAnchorElement>) => {
-    if (!window.matchMedia("(pointer: fine)").matches) return;
+    if (
+      !window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches
+    ) return;
     const box = event.currentTarget.getBoundingClientRect();
     event.currentTarget.style.setProperty(
       "--magnet-x",
@@ -92,15 +100,23 @@ export function LandingPage() {
   const catalogTrigger = useRef<HTMLButtonElement>(null);
   const catalogHeading = useRef<HTMLHeadingElement>(null);
   const shouldRestoreCatalogFocus = useRef(false);
+  const catalogScrollBehavior = useRef<ScrollBehavior>("auto");
   const scrollTriggerRefresh = useRef<(() => void) | null>(null);
   const shortlistPanel = useRef<HTMLElement>(null);
   const shortlistCloseButton = useRef<HTMLButtonElement>(null);
   const shortlistReturnFocus = useRef<HTMLElement | null>(null);
+  const shortlistExitTimer = useRef<number | null>(null);
+  const shortlistOpenFrame = useRef<number | null>(null);
+  const shortlistMountedRef = useRef(false);
+  const shortlistOpenRef = useRef(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [menuInstant, setMenuInstant] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [storageAvailable, setStorageAvailable] = useState(true);
+  const [shortlistMounted, setShortlistMounted] = useState(false);
   const [shortlistOpen, setShortlistOpen] = useState(false);
+  const [shortlistInstant, setShortlistInstant] = useState(false);
   const [storyOpen, setStoryOpen] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
@@ -113,6 +129,63 @@ export function LandingPage() {
   const noticePet = saveNotice
     ? residents.find((pet) => pet.id === saveNotice.petId)
     : undefined;
+
+  const clearShortlistMotion = useCallback(() => {
+    if (shortlistExitTimer.current !== null) {
+      window.clearTimeout(shortlistExitTimer.current);
+      shortlistExitTimer.current = null;
+    }
+    if (shortlistOpenFrame.current !== null) {
+      window.cancelAnimationFrame(shortlistOpenFrame.current);
+      shortlistOpenFrame.current = null;
+    }
+  }, []);
+
+  const closeShortlist = useCallback((instant: boolean) => {
+    if (!shortlistMountedRef.current) return;
+    clearShortlistMotion();
+    shortlistOpenRef.current = false;
+    setShortlistInstant(instant);
+    setShortlistOpen(false);
+
+    if (instant) {
+      shortlistMountedRef.current = false;
+      setShortlistMounted(false);
+      return;
+    }
+
+    shortlistExitTimer.current = window.setTimeout(() => {
+      shortlistMountedRef.current = false;
+      setShortlistMounted(false);
+      shortlistExitTimer.current = null;
+    }, 200);
+  }, [clearShortlistMotion]);
+
+  const openShortlist = useCallback((returnFocusTo: HTMLElement | null, instant: boolean) => {
+    clearShortlistMotion();
+    shortlistOpenRef.current = true;
+    shortlistReturnFocus.current = returnFocusTo;
+    setMenuInstant(instant);
+    setMenuOpen(false);
+    setShortlistInstant(instant);
+
+    if (shortlistMountedRef.current) {
+      setShortlistOpen(true);
+      return;
+    }
+
+    shortlistMountedRef.current = true;
+    setShortlistMounted(true);
+    if (instant) {
+      setShortlistOpen(true);
+      return;
+    }
+
+    shortlistOpenFrame.current = window.requestAnimationFrame(() => {
+      setShortlistOpen(true);
+      shortlistOpenFrame.current = null;
+    });
+  }, [clearShortlistMotion]);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -131,6 +204,8 @@ export function LandingPage() {
     return () => window.cancelAnimationFrame(frame);
   }, []);
 
+  useEffect(() => () => clearShortlistMotion(), [clearShortlistMotion]);
+
   useEffect(() => {
     if (!shortlistOpen) return;
     const panel = shortlistPanel.current;
@@ -141,7 +216,7 @@ export function LandingPage() {
     const handleDialogKeydown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.preventDefault();
-        setShortlistOpen(false);
+        closeShortlist(true);
         return;
       }
 
@@ -171,13 +246,14 @@ export function LandingPage() {
       shortlistReturnFocus.current?.focus({ preventScroll: true });
       shortlistReturnFocus.current = null;
     };
-  }, [shortlistOpen]);
+  }, [closeShortlist, shortlistOpen]);
 
   useEffect(() => {
     if (!menuOpen) return;
     const closeMenuOnEscape = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
       event.preventDefault();
+      setMenuInstant(true);
       setMenuOpen(false);
       menuButton.current?.focus({ preventScroll: true });
     };
@@ -204,14 +280,14 @@ export function LandingPage() {
       if (catalogOpen) {
         catalogHeading.current?.focus({ preventScroll: true });
         document.getElementById("all-residents")?.scrollIntoView({
-          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+          behavior: catalogScrollBehavior.current,
           block: "start",
         });
       } else if (shouldRestoreCatalogFocus.current) {
         shouldRestoreCatalogFocus.current = false;
         catalogTrigger.current?.focus({ preventScroll: true });
         document.getElementById("residents")?.scrollIntoView({
-          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+          behavior: catalogScrollBehavior.current,
           block: "start",
         });
       }
@@ -234,19 +310,21 @@ export function LandingPage() {
       if (!href || !target) return;
 
       event.preventDefault();
+      const instant = event.detail === 0;
+      setMenuInstant(instant);
       setMenuOpen(false);
-      setShortlistOpen(false);
+      closeShortlist(instant);
       const destination = href === "#top" ? 0 : window.scrollY + target.getBoundingClientRect().top - 64;
       window.history.pushState(null, "", href);
       window.scrollTo({
         top: Math.max(0, destination),
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        behavior: scrollBehaviorForClick(event.detail),
       });
     };
 
     container.addEventListener("click", navigateToSection);
     return () => container.removeEventListener("click", navigateToSection);
-  }, []);
+  }, [closeShortlist]);
 
   useLayoutEffect(() => {
     const scope = root.current;
@@ -539,31 +617,28 @@ export function LandingPage() {
     });
   };
 
-  const moveResidents = (direction: -1 | 1) => {
+  const moveResidents = (direction: -1 | 1, detail: number) => {
+    const behavior = scrollBehaviorForClick(detail);
     if (
       window.matchMedia(
         "(min-width: 900px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
       ).matches
     ) {
-      window.scrollBy({ top: direction * 480, behavior: "smooth" });
+      window.scrollBy({ top: direction * 480, behavior });
       return;
     }
-    residentScroller.current?.scrollBy({ left: direction * 320, behavior: "smooth" });
+    residentScroller.current?.scrollBy({ left: direction * 320, behavior });
   };
 
-  const openResidentCatalog = () => {
+  const openResidentCatalog = (detail: number) => {
+    catalogScrollBehavior.current = scrollBehaviorForClick(detail);
     setCatalogOpen(true);
   };
 
-  const closeResidentCatalog = () => {
+  const closeResidentCatalog = (detail: number) => {
+    catalogScrollBehavior.current = scrollBehaviorForClick(detail);
     shouldRestoreCatalogFocus.current = true;
     setCatalogOpen(false);
-  };
-
-  const openShortlist = (returnFocusTo: HTMLElement | null) => {
-    shortlistReturnFocus.current = returnFocusTo;
-    setMenuOpen(false);
-    setShortlistOpen(true);
   };
 
   const sharePawFriend = async () => {
@@ -637,11 +712,13 @@ export function LandingPage() {
             aria-expanded={shortlistOpen}
             aria-controls="shortlist-panel"
             onClick={(event) => {
+              const instant = event.detail === 0;
+              setMenuInstant(instant);
               setMenuOpen(false);
-              if (shortlistOpen) {
-                setShortlistOpen(false);
+              if (shortlistOpenRef.current) {
+                closeShortlist(instant);
               } else {
-                openShortlist(event.currentTarget);
+                openShortlist(event.currentTarget, instant);
               }
             }}
           >
@@ -660,41 +737,65 @@ export function LandingPage() {
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
-          onClick={() => {
-            setShortlistOpen(false);
+          onClick={(event) => {
+            const instant = event.detail === 0;
+            closeShortlist(instant);
+            setMenuInstant(instant);
             setMenuOpen((open) => !open);
           }}
         >
           {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
-        <div className={`mobile-menu ${menuOpen ? "is-open" : ""}`} id="mobile-navigation">
+        <div
+          className={`mobile-menu ${menuOpen ? "is-open" : ""} ${menuInstant ? "is-instant" : ""}`}
+          id="mobile-navigation"
+        >
           {navigation.map((item) => (
-            <a href={item.href} key={item.href} onClick={() => setMenuOpen(false)}>
+            <a
+              href={item.href}
+              key={item.href}
+              onClick={(event) => {
+                setMenuInstant(event.detail === 0);
+                setMenuOpen(false);
+              }}
+            >
               {item.label}
             </a>
           ))}
           <button
             type="button"
-            onClick={() => {
-              openShortlist(menuButton.current);
+            onClick={(event) => {
+              openShortlist(menuButton.current, event.detail === 0);
             }}
           >
             View saved pets ({favorites.length})
           </button>
-          <a href="#residents" onClick={() => setMenuOpen(false)}>Meet the pets</a>
+          <a
+            href="#residents"
+            onClick={(event) => {
+              setMenuInstant(event.detail === 0);
+              setMenuOpen(false);
+            }}
+          >Meet the pets</a>
         </div>
       </header>
 
-      {shortlistOpen ? (
+      {shortlistMounted ? (
         <>
-        <div className="shortlist-backdrop" aria-hidden="true" onClick={() => setShortlistOpen(false)} />
+        <div
+          className={`shortlist-backdrop ${shortlistOpen ? "is-open" : ""} ${shortlistInstant ? "is-instant" : ""}`}
+          aria-hidden="true"
+          onClick={(event) => closeShortlist(event.detail === 0)}
+        />
         <aside
           ref={shortlistPanel}
-          className="shortlist-panel"
+          className={`shortlist-panel ${shortlistOpen ? "is-open" : ""} ${shortlistInstant ? "is-instant" : ""}`}
           id="shortlist-panel"
           role="dialog"
-          aria-modal="true"
+          aria-modal={shortlistOpen ? "true" : undefined}
+          aria-hidden={!shortlistOpen}
           aria-labelledby="shortlist-title"
+          inert={!shortlistOpen}
         >
           <div className="shortlist-heading">
             <div>
@@ -706,7 +807,7 @@ export function LandingPage() {
               className="shortlist-close"
               type="button"
               aria-label="Close saved pets"
-              onClick={() => setShortlistOpen(false)}
+              onClick={(event) => closeShortlist(event.detail === 0)}
             >
               <X aria-hidden="true" />
             </button>
@@ -737,7 +838,7 @@ export function LandingPage() {
               <Heart aria-hidden="true" />
               <h3>No pets saved yet.</h3>
               <p>Start with the face that makes you pause. You can compare favorites here before planning a visit.</p>
-              <a className="button-link" href="#residents" onClick={() => setShortlistOpen(false)}>
+              <a className="button-link" href="#residents">
                 <span>Browse the residents</span>
                 <ArrowRight aria-hidden="true" />
               </a>
@@ -830,7 +931,10 @@ export function LandingPage() {
                 type="button"
                 aria-expanded={catalogOpen}
                 aria-controls="all-residents"
-                onClick={catalogOpen ? closeResidentCatalog : openResidentCatalog}
+                onClick={(event) => {
+                  if (catalogOpen) closeResidentCatalog(event.detail);
+                  else openResidentCatalog(event.detail);
+                }}
               >
                 <span>
                   {catalogOpen
@@ -842,10 +946,10 @@ export function LandingPage() {
                   : <ArrowRight aria-hidden="true" size={18} />}
               </button>
               <div className="gallery-controls">
-                <button type="button" onClick={() => moveResidents(-1)} aria-label="View previous resident">
+                <button type="button" onClick={(event) => moveResidents(-1, event.detail)} aria-label="View previous resident">
                   <ArrowLeft aria-hidden="true" />
                 </button>
-                <button type="button" onClick={() => moveResidents(1)} aria-label="View next resident">
+                <button type="button" onClick={(event) => moveResidents(1, event.detail)} aria-label="View next resident">
                   <ArrowRight aria-hidden="true" />
                 </button>
               </div>
@@ -937,7 +1041,11 @@ export function LandingPage() {
               })}
             </div>
 
-            <button className="button-link catalog-back" type="button" onClick={closeResidentCatalog}>
+            <button
+              className="button-link catalog-back"
+              type="button"
+              onClick={(event) => closeResidentCatalog(event.detail)}
+            >
               <ArrowLeft aria-hidden="true" size={18} />
               <span>{siteCopy.residents.showFeatured}</span>
             </button>
@@ -1047,7 +1155,7 @@ export function LandingPage() {
           <button
             className="prepare-shortlist"
             type="button"
-            onClick={(event) => openShortlist(event.currentTarget)}
+            onClick={(event) => openShortlist(event.currentTarget, event.detail === 0)}
           >
             <Heart aria-hidden="true" fill={favorites.length ? "currentColor" : "none"} />
             View my shortlist <span>{favorites.length}</span>
