@@ -1,8 +1,8 @@
 # PawFriend Resident Portrait Asset Manifest
 
-The five dedicated resident portraits are fresh standalone generations made with the built-in ImageGen tool. Each source prompt is embedded in the corresponding PNG as `impeccable:prompt` metadata, and the landing page delivers a purpose-sized WebP derivative with the same basename.
+The nine dedicated resident portraits are fresh standalone generations made with the built-in ImageGen tool. Each source prompt is embedded in the corresponding PNG as `impeccable:prompt` metadata, and the landing page delivers a purpose-sized WebP derivative with the same basename.
 
-The current catalog contains nine resident records. The first five use these dedicated portrait sources; four additional records intentionally reuse existing documented delivery assets until dedicated portraits or a live shelter feed replaces them:
+The current catalog contains nine resident records. Every resident now uses a dedicated square portrait source:
 
 | Resident | Current delivery asset | Provenance source |
 |---|---|---|
@@ -11,10 +11,10 @@ The current catalog contains nine resident records. The first five use these ded
 | Pepper | `public/images/residents/pepper.webp` | `pepper.png` below |
 | Otis | `public/images/residents/otis.webp` | `otis.png` below |
 | Nori | `public/images/residents/nori.webp` | `nori.png` below |
-| Miso | `public/images/featured-miso.webp` | `.impeccable/asset-manifest-hero.md` |
-| Archie | `public/images/story/journey-meet.webp` | `.impeccable/asset-manifest-story.md` |
-| Poppy | `public/images/story/journey-love.webp` | delivery-only story asset; no source prompt is present in this workspace |
-| Ruby | `public/images/story/journey-home.webp` | `.impeccable/asset-manifest-story.md` |
+| Miso | `public/images/residents/miso.webp` | `miso.png` below |
+| Archie | `public/images/residents/archie.webp` | `archie.png` below |
+| Poppy | `public/images/residents/poppy.webp` | `poppy.png` below |
+| Ruby | `public/images/residents/ruby.webp` | `ruby.png` below |
 
 ## milo.png
 
@@ -114,4 +114,85 @@ Lighting/mood: Soft warm natural window light with gentle side highlights that r
 Color palette: Natural black, clean ivory, warm beige, restrained natural color.
 Constraints: One subject per image; standalone photograph only; preserve realistic anatomy, eyes, fur, whiskers, nose, and ears; retain shadow detail in black coat; background must remain quiet and softly blurred; no frame or collage.
 Avoid: text, letters, numbers, logos, watermark, labels, collars, clothing, costumes, human hands, cages, distorted anatomy, duplicate animals, crushed black shadows, harsh studio lighting.
+```
+
+## miso.png
+
+- Pet: Miso, red Shiba Inu
+- Dimensions: 1254 × 1254 px
+- Additional identity reference: `public/images/featured-miso.webp`
+- Prompt:
+
+```text
+Use case: photorealistic-natural
+Asset type: square resident portrait for a pet-adoption website contact card
+Primary request: Create a dedicated portrait of Miso, a four-year-old red Shiba Inu. Use the final input image only as Miso's breed, coat, and facial reference. Use the first four resident images as the binding photographic style reference.
+Scene/backdrop: Quiet cream shelter interior with soft warm neutral walls, subtly blurred.
+Subject: One healthy adult red Shiba Inu, calm quiet confidence, tidy coat, gentle direct eye contact.
+Style/medium: Realistic editorial animal photography, humane and candid, matching the resident reference portraits.
+Composition/framing: Square, eye-level head-and-upper-chest portrait, centered face, complete ears, comfortable breathing room.
+Lighting/mood: Soft natural window light, warm and calm, shallow depth of field, crisp eyes.
+Color palette: Cream, warm beige, natural red and white fur.
+Constraints: One animal only; anatomically correct; consistent camera distance, backdrop, lighting, and polish with the reference portraits; no text; no collar; no accessories; no watermark.
+Avoid: Transparent background, cutout look, studio-white background, illustration, costume, cage, signage, duplicated animal, exaggerated smile.
+```
+
+## archie.png
+
+- Pet: Archie, sable-and-black shepherd mix
+- Dimensions: 1254 × 1254 px
+- Prompt:
+
+```text
+Use case: photorealistic-natural
+Asset type: square resident portrait for a pet-adoption website contact card
+Primary request: Create a dedicated portrait of Archie, a two-year-old shepherd mix. Match the five existing resident images as the binding photographic style reference.
+Scene/backdrop: Quiet cream shelter interior with soft warm neutral walls, subtly blurred.
+Subject: One medium young shepherd-mix dog with short sable-and-black coat, thoughtful brown eyes, semi-pricked ears, gentle attentive expression.
+Style/medium: Realistic editorial animal photography, humane and candid, matching the resident reference portraits.
+Composition/framing: Square, eye-level head-and-upper-chest portrait, centered face, complete ears, comfortable breathing room.
+Lighting/mood: Soft natural window light, warm and calm, shallow depth of field, crisp eyes.
+Color palette: Cream, warm beige, natural sable and black fur.
+Constraints: One animal only; anatomically correct; consistent camera distance, backdrop, lighting, and polish with the reference portraits; no human hand; no text; no collar; no accessories; no watermark.
+Avoid: Black and white, action scene, cutout look, illustration, costume, cage, signage, duplicated animal, exaggerated smile.
+```
+
+## poppy.png
+
+- Pet: Poppy, cinnamon-and-white Podenco mix
+- Dimensions: 1254 × 1254 px
+- Prompt:
+
+```text
+Use case: photorealistic-natural
+Asset type: square resident portrait for a pet-adoption website contact card
+Primary request: Create a dedicated portrait of Poppy, a one-year-old Podenco mix. Match the five existing resident images as the binding photographic style reference.
+Scene/backdrop: Quiet cream shelter interior with soft warm neutral walls, subtly blurred.
+Subject: One slender young Podenco-mix dog, warm cinnamon coat with white chest and narrow white blaze, very large upright ears, amber-brown eyes, bright curious expression.
+Style/medium: Realistic editorial animal photography, humane and candid, matching the resident reference portraits.
+Composition/framing: Square, eye-level head-and-upper-chest portrait, centered face, complete oversized ears, comfortable breathing room.
+Lighting/mood: Soft natural window light, warm and calm, shallow depth of field, crisp eyes.
+Color palette: Cream, warm beige, natural cinnamon and white fur.
+Constraints: One animal only; anatomically correct; clearly distinct from Milo; consistent camera distance, backdrop, lighting, and polish with the reference portraits; no text; no collar; no accessories; no watermark.
+Avoid: Reused Milo likeness, action scene, cutout look, illustration, costume, cage, signage, duplicated animal, exaggerated smile.
+```
+
+## ruby.png
+
+- Pet: Ruby, chestnut, black, and white hound mix
+- Dimensions: 1254 × 1254 px
+- Prompt:
+
+```text
+Use case: photorealistic-natural
+Asset type: square resident portrait for a pet-adoption website contact card
+Primary request: Create a dedicated portrait of Ruby, a five-year-old hound mix. Match the five existing resident images as the binding photographic style reference.
+Scene/backdrop: Quiet cream shelter interior with soft warm neutral walls, subtly blurred.
+Subject: One adult hound-mix dog with chestnut, black, and white coat, soft folded ears, soulful brown eyes, calm settled expression.
+Style/medium: Realistic editorial animal photography, humane and candid, matching the resident reference portraits.
+Composition/framing: Square, eye-level head-and-upper-chest portrait, centered face, complete ears, comfortable breathing room.
+Lighting/mood: Soft natural window light, warm and calm, shallow depth of field, crisp eyes.
+Color palette: Cream, warm beige, natural chestnut, black, and white fur.
+Constraints: One animal only; anatomically correct; consistent camera distance, backdrop, lighting, and polish with the reference portraits; no car; no text; no collar; no accessories; no watermark.
+Avoid: Black and white, outdoor scene, action scene, cutout look, illustration, costume, cage, signage, duplicated animal, exaggerated smile.
 ```

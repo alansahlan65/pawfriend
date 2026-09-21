@@ -127,7 +127,7 @@ export const residents = [
   {
     id: "miso",
     name: "Miso",
-    image: "/images/featured-miso.webp",
+    image: "/images/residents/miso.webp",
     age: "4 years",
     breed: "Shiba Inu",
     trait: "Blanket quality inspector",
@@ -137,7 +137,7 @@ export const residents = [
   {
     id: "archie",
     name: "Archie",
-    image: "/images/story/journey-meet.webp",
+    image: "/images/residents/archie.webp",
     age: "2 years",
     breed: "Shepherd mix",
     trait: "Professional hand-holder",
@@ -147,7 +147,7 @@ export const residents = [
   {
     id: "poppy",
     name: "Poppy",
-    image: "/images/story/journey-love.webp",
+    image: "/images/residents/poppy.webp",
     age: "1 year",
     breed: "Podenco mix",
     trait: "Full-time optimist",
@@ -157,7 +157,7 @@ export const residents = [
   {
     id: "ruby",
     name: "Ruby",
-    image: "/images/story/journey-home.webp",
+    image: "/images/residents/ruby.webp",
     age: "5 years",
     breed: "Hound mix",
     trait: "Passenger-seat supervisor",
