@@ -179,7 +179,7 @@ export const journey = [
     number: "01",
     title: "Meet someone.",
     copy: "Start with personality, pace, and the kind of home you share.",
-    image: "/images/story/journey-meet.webp",
+    image: "/images/story/journey-meet-color.webp",
   },
   {
     number: "02",
@@ -197,7 +197,7 @@ export const journey = [
     number: "04",
     title: "Go home together.",
     copy: "Leave with support, a plan, and one very excited new passenger.",
-    image: "/images/story/journey-home.webp",
+    image: "/images/story/journey-home-color.webp",
   },
 ] as const;
 

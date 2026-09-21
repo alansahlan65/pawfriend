@@ -113,3 +113,42 @@ Lighting/mood: Soft open shade with luminous highlights, joyful release, freedom
 Constraints: Safe believable car-window posture; realistic canine anatomy; one dog only; no people visible; no text; no logos; no watermark.
 Avoid: Dog leaning dangerously far outside, visible distress, open truck bed, traffic danger, readable badges or license plates, commercial vehicle branding, selective color, sepia, exaggerated grin, illustration or CGI.
 ```
+
+## journey-meet-color.png
+
+- Purpose: color source for journey step 01. CSS presents this source in grayscale until hover.
+- Dimensions: 1024 × 1536 px
+- Edit target: `public/images/story/journey-meet.webp`
+- Prompt:
+
+```text
+Use case: compositing
+Asset type: color hover-state image for step 01 of a pet-adoption journey
+Primary request: Apply natural color to the black-and-white edit target while preserving the same intimate shelter moment.
+Input images: The black-and-white journey image is the edit target; the earlier color draft supplies plausible coat, skin, sleeve, and room colors only.
+Subject: A sable-and-black shepherd-mix dog resting its tilted head in a human hand inside a quiet shelter room.
+Style/medium: Realistic candid documentary photography.
+Lighting/mood: Soft natural window light, warm but restrained, humane and calm.
+Color palette: Sable-and-black coat with white chest, warm natural skin, charcoal sleeve, muted cream room.
+Constraints: Preserve the dog identity, expression, head tilt, ears, hand placement, sleeve, room, portrait aspect ratio, and documentary character. No text or watermark.
+Avoid: Saturated color, cinematic grading, illustration, added objects, costume, signage.
+```
+## journey-home-color.png
+
+- Purpose: color source for journey step 04. CSS presents this source in grayscale until hover.
+- Dimensions: 1024 × 1536 px
+- Edit target: `public/images/story/journey-home.webp`
+- Prompt:
+
+```text
+Use case: compositing
+Asset type: color hover-state image for step 04 of a pet-adoption journey
+Primary request: Apply natural color to the black-and-white edit target while preserving the same dog-going-home moment.
+Input images: The black-and-white journey image is the edit target; the earlier color draft supplies plausible dog, car, tree, road, and sky colors only.
+Subject: A happy chestnut, black, and white hound-mix dog leaning from a car window on a tree-lined road.
+Style/medium: Realistic candid documentary photography.
+Lighting/mood: Soft daylight, warm but restrained, hopeful and natural.
+Color palette: Chestnut, black, and white coat; muted dark gray-blue car; soft green trees; neutral road and sky.
+Constraints: Preserve the dog identity, expression, car-window composition, road, trees, portrait aspect ratio, and documentary character. No text or watermark.
+Avoid: Saturated color, cinematic grading, illustration, added objects, costume, signage.
+```

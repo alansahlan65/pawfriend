@@ -486,7 +486,7 @@ export function LandingPage() {
               ease: "none",
               scrollTrigger: {
                 trigger: pin,
-                start: "top top",
+                start: "top 80px",
                 end: () => `+=${Math.max(900, distance() * 1.25)}`,
                 pin: true,
                 scrub: 0.7,
