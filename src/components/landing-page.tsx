@@ -393,8 +393,8 @@ export function LandingPage() {
               .forEach((element) => {
                 gsap.from(element, {
                   clipPath: "inset(0 0 100% 0)",
-                  y: 28,
-                  duration: 0.9,
+                  y: 20,
+                  duration: 0.8,
                   ease: "expo.out",
                   scrollTrigger: {
                     trigger: element,
@@ -413,9 +413,9 @@ export function LandingPage() {
               once: true,
               onEnter: (elements) =>
                 gsap.from(elements, {
-                  y: 36,
+                  y: 24,
                   autoAlpha: 0,
-                  duration: 0.72,
+                  duration: 0.64,
                   stagger: 0.06,
                   ease: "power3.out",
                 }),
@@ -447,30 +447,30 @@ export function LandingPage() {
                 start: "top top",
                 end: "+=115%",
                 pin: heroStage,
-                scrub: 0.75,
+                scrub: 1.1,
                 anticipatePin: 1,
                 invalidateOnRefresh: true,
               },
             });
 
             heroHandoff
-              .to(".hero-copy", { yPercent: -38, scale: 0.94, autoAlpha: 0.1 }, 0)
-              .to(".hero-line-wrap:nth-child(odd) .hero-line", { xPercent: -10 }, 0)
-              .to(".hero-line-wrap:nth-child(even) .hero-line", { xPercent: 8 }, 0)
+              .to(".hero-copy", { yPercent: -30, scale: 0.96, autoAlpha: 0.18 }, 0)
+              .to(".hero-line-wrap:nth-child(odd) .hero-line", { xPercent: -6 }, 0)
+              .to(".hero-line-wrap:nth-child(even) .hero-line", { xPercent: 5 }, 0)
               .to(".hero-aside", { xPercent: 102 }, 0.04)
-              .to(".hero-note", { yPercent: -60, autoAlpha: 0 }, 0.04)
-              .to(".hero-dog", { yPercent: -30, scale: 1.4 }, 0)
-              .to(".blue-swipe", { xPercent: -12, scaleX: 1.38, scaleY: 1.08 }, 0)
-              .fromTo(introBand, { yPercent: 102 }, { yPercent: 0 }, 0.42)
+              .to(".hero-note", { yPercent: -40, autoAlpha: 0 }, 0.04)
+              .to(".hero-dog", { yPercent: -22, scale: 1.28 }, 0)
+              .to(".blue-swipe", { xPercent: -8, scaleX: 1.24, scaleY: 1.04 }, 0)
+              .fromTo(introBand, { yPercent: 100 }, { yPercent: 0 }, 0.42)
               .fromTo(
                 ".intro-band h2",
-                { clipPath: "inset(100% 0 0 0)", y: 42 },
+                { clipPath: "inset(100% 0 0 0)", y: 28 },
                 { clipPath: "inset(0% 0 0 0)", y: 0, duration: 0.3 },
                 0.6,
               )
               .fromTo(
                 ".intro-band > p, .paw-scatter",
-                { autoAlpha: 0, y: 24 },
+                { autoAlpha: 0, y: 16 },
                 { autoAlpha: 1, y: 0, duration: 0.24, stagger: 0.05 },
                 0.7,
               );
@@ -490,7 +490,8 @@ export function LandingPage() {
                 start: "top 80px",
                 end: () => `+=${Math.max(900, distance() * 1.25)}`,
                 pin: true,
-                scrub: 0.7,
+                scrub: 1,
+                anticipatePin: 1,
                 invalidateOnRefresh: true,
               },
             });
@@ -507,7 +508,7 @@ export function LandingPage() {
                   trigger: ".journey-grid",
                   start: "top 70%",
                   end: "bottom 65%",
-                  scrub: 0.6,
+                  scrub: 0.8,
                 },
               },
             );
@@ -539,17 +540,17 @@ export function LandingPage() {
                 start: "top 64px",
                 end: "+=125%",
                 pin: fitStage,
-                scrub: 0.8,
+                scrub: 1.1,
                 anticipatePin: 1,
                 invalidateOnRefresh: true,
               },
             });
 
             fitHandoff
-              .to(".personality-copy", { xPercent: -32, autoAlpha: 0.08, duration: 0.48 }, 0)
-              .to(".rating-list", { xPercent: 34, autoAlpha: 0.08, duration: 0.48 }, 0)
-              .to(".otis-stage img", { xPercent: -14, scale: 0.9, duration: 0.48 }, 0)
-              .to(".otis-swipe", { xPercent: -18, scaleX: 0.72, rotate: -4, duration: 0.48 }, 0)
+              .to(".personality-copy", { xPercent: -24, autoAlpha: 0.14, duration: 0.48 }, 0)
+              .to(".rating-list", { xPercent: 24, autoAlpha: 0.14, duration: 0.48 }, 0)
+              .to(".otis-stage img", { xPercent: -10, scale: 0.94, duration: 0.48 }, 0)
+              .to(".otis-swipe", { xPercent: -12, scaleX: 0.8, rotate: -2.5, duration: 0.48 }, 0)
               .to(fitSeam, { scaleY: 1, duration: 0.1 }, 0.18)
               .to(
                 journeySection,
@@ -563,13 +564,13 @@ export function LandingPage() {
               )
               .fromTo(
                 ".journey-title-wrap",
-                { x: 120, clipPath: "inset(0 100% 0 0)" },
+                { x: 80, clipPath: "inset(0 100% 0 0)" },
                 { x: 0, clipPath: "inset(0 0% 0 0)", duration: 0.3 },
                 0.5,
               )
               .fromTo(
                 ".journey-step",
-                { x: 96, autoAlpha: 0 },
+                { x: 56, autoAlpha: 0 },
                 { x: 0, autoAlpha: 1, duration: 0.32, stagger: 0.04 },
                 0.58,
               )

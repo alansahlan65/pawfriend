@@ -2524,7 +2524,7 @@ button {
   .resident-scroller {
     overflow-x: auto;
     overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     scrollbar-width: none;
   }
 
@@ -2587,7 +2587,8 @@ button {
     margin-inline: -24px;
     padding-inline: 24px;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
     scrollbar-width: none;
   }
 
