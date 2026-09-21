@@ -17,6 +17,7 @@ import {
   adoptionFaqs,
   journey,
   navigation,
+  personality,
   preparationSteps,
   residents,
   siteCopy,
@@ -74,45 +75,27 @@ function MagneticLink({ href, children, className = "" }: MagneticLinkProps) {
   );
 }
 
-type Resident = (typeof residents)[number];
-
-function ResidentCard({ pet, saved, catalog = false, onSave, onMeet }: {
-  pet: Resident;
-  saved: boolean;
-  catalog?: boolean;
-  onSave: (id: string) => void;
-  onMeet: (id: string, detail: number) => void;
-}) {
+function Rating({ label, score }: { label: string; score: number }) {
   return (
-    <article className={catalog ? "catalog-pet-card" : "pet-card"}>
-      <div className="contact-print">
-        <span className={`pet-label ${pet.color}`}>{pet.name}</span>
-        <button className="pet-photo profile-photo-trigger" type="button" aria-label={siteCopy.discovery.meet(pet.name)} onClick={(event) => onMeet(pet.id, event.detail)}>
-          <Image src={pet.image} alt={`${pet.name}, ${pet.breed}`} fill sizes="(max-width: 640px) 80vw, 340px" />
-          <span className="portrait-caption" aria-hidden="true">{siteCopy.discovery.meet(pet.name)} <ArrowRight size={18} /></span>
-        </button>
-      </div>
-      <div className="pet-meta"><span>{pet.age}</span><span>{pet.breed}</span></div>
-      <h3>{pet.trait}</h3>
-      <p>{pet.observation}</p>
-      <div className="pet-actions">
-        <button className="profile-link" type="button" onClick={(event) => onMeet(pet.id, event.detail)}>{siteCopy.discovery.meet(pet.name)} <ArrowRight aria-hidden="true" size={17} /></button>
-        <button className={saved ? "is-favorite" : ""} type="button" aria-label={saved ? `Remove ${pet.name} from favorites` : `Save ${pet.name} to favorites`} aria-pressed={saved} onClick={() => onSave(pet.id)}>
-          <Heart aria-hidden="true" fill={saved ? "currentColor" : "none"} />
-        </button>
-      </div>
-    </article>
+    <div className="rating-row">
+      <span>{label}</span>
+      <span className="paw-rating" aria-label={`${score} out of 5`}>
+        {[1, 2, 3, 4, 5].map((paw) => (
+          <PawPrint
+            aria-hidden="true"
+            className={paw <= score ? "is-filled" : ""}
+            key={paw}
+            size={22}
+            strokeWidth={1.8}
+          />
+        ))}
+      </span>
+    </div>
   );
 }
 
 export function LandingPage() {
   const root = useRef<HTMLDivElement>(null);
-  const profileHeading = useRef<HTMLHeadingElement>(null);
-  const profileNavigationFrame = useRef<number | null>(null);
-  const [selectedPetId, setSelectedPetId] = useState<string>("milo");
-  const [speciesFilter, setSpeciesFilter] = useState<"all" | "dog" | "cat">("all");
-  const selectedPet = residents.find((pet) => pet.id === selectedPetId) ?? residents[0];
-  const catalogPets = residents.filter((pet) => speciesFilter === "all" || pet.species === speciesFilter);
   const residentScroller = useRef<HTMLDivElement>(null);
   const catalogTrigger = useRef<HTMLButtonElement>(null);
   const catalogHeading = useRef<HTMLHeadingElement>(null);
@@ -260,11 +243,8 @@ export function LandingPage() {
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleDialogKeydown);
-      const returnFocusTo = shortlistReturnFocus.current;
+      shortlistReturnFocus.current?.focus({ preventScroll: true });
       shortlistReturnFocus.current = null;
-      window.requestAnimationFrame(() => {
-        returnFocusTo?.focus({ preventScroll: true });
-      });
     };
   }, [closeShortlist, shortlistOpen]);
 
@@ -349,253 +329,267 @@ export function LandingPage() {
   useLayoutEffect(() => {
     const scope = root.current;
     if (!scope) return;
+
     let disposed = false;
     let motionContext: { revert: () => void } | null = null;
 
     const setupMotion = async () => {
       try {
-        const [{ gsap }, { ScrollTrigger }] = await Promise.all([import("gsap"), import("gsap/ScrollTrigger")]);
+        const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+          import("gsap"),
+          import("gsap/ScrollTrigger"),
+        ]);
         if (disposed) return;
+
         gsap.registerPlugin(ScrollTrigger);
         scrollTriggerRefresh.current = () => ScrollTrigger.refresh();
         motionContext = gsap.context(() => {
-          const media = gsap.matchMedia();
-          media.add(
-            {
-              motion: "(prefers-reduced-motion: no-preference)",
-              desktopMotion: "(min-width: 900px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
-              narrativeMotion: "(min-width: 1121px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
-            },
-            (mediaContext) => {
-              const { motion, desktopMotion, narrativeMotion } = mediaContext.conditions as {
-                motion: boolean;
-                desktopMotion: boolean;
-                narrativeMotion: boolean;
-              };
+      const media = gsap.matchMedia();
 
-              if (motion) {
-                gsap.from(".hero-line", {
-                  yPercent: 108,
-                  duration: 1.05,
-                  stagger: 0.08,
+      media.add(
+        {
+          motion: "(prefers-reduced-motion: no-preference)",
+          desktopMotion:
+            "(min-width: 900px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+          narrativeMotion:
+            "(min-width: 1121px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+        },
+        (mediaContext) => {
+          const { motion, desktopMotion, narrativeMotion } = mediaContext.conditions as {
+            motion: boolean;
+            desktopMotion: boolean;
+            narrativeMotion: boolean;
+          };
+
+          if (motion) {
+            gsap.from(".hero-line", {
+              yPercent: 105,
+              duration: 1.1,
+              stagger: 0.09,
+              ease: "expo.out",
+            });
+            gsap.from(".hero-dog", {
+              y: 56,
+              scale: 0.92,
+              autoAlpha: 0,
+              duration: 1.2,
+              delay: 0.12,
+              ease: "expo.out",
+            });
+            gsap.from(".hero-aside > *", {
+              x: 32,
+              autoAlpha: 0,
+              duration: 0.75,
+              stagger: 0.08,
+              delay: 0.42,
+              ease: "power3.out",
+            });
+
+            gsap.utils
+              .toArray<HTMLElement>(
+                ".section-heading, .personality-copy, .journey-title-wrap, .success-headline, .prepare-lead, .faq-intro",
+              )
+              .forEach((element) => {
+                gsap.from(element, {
+                  clipPath: "inset(0 0 100% 0)",
+                  y: 28,
+                  duration: 0.9,
                   ease: "expo.out",
-                });
-                gsap.from(".hero-description, .hero-actions, .hero-footnote", {
-                  y: 24,
-                  autoAlpha: 0,
-                  duration: 0.72,
-                  stagger: 0.07,
-                  delay: 0.32,
-                  ease: "power3.out",
-                });
-                gsap.from(".hero-portrait", {
-                  y: 44,
-                  scale: 0.95,
-                  autoAlpha: 0,
-                  duration: 1.1,
-                  delay: 0.12,
-                  ease: "expo.out",
-                });
-
-                gsap.utils
-                  .toArray<HTMLElement>(
-                    ".residents-heading, .catalog-heading, .success-copy, .journey-title-wrap, .prepare-lead, .faq-intro",
-                  )
-                  .forEach((element) => {
-                    gsap.from(element, {
-                      clipPath: "inset(0 0 100% 0)",
-                      y: 28,
-                      duration: 0.85,
-                      ease: "expo.out",
-                      scrollTrigger: { trigger: element, start: "top 86%", once: true },
-                    });
-                  });
-
-                ScrollTrigger.batch(".prepare-step", {
-                  start: "top 90%",
-                  once: true,
-                  onEnter: (elements) =>
-                    gsap.from(elements, {
-                      y: 34,
-                      autoAlpha: 0,
-                      duration: 0.68,
-                      stagger: 0.06,
-                      ease: "power3.out",
-                    }),
-                });
-              }
-
-              if (narrativeMotion) {
-                const heroStory = scope.querySelector<HTMLElement>(".hero-story");
-                const hero = scope.querySelector<HTMLElement>(".hero");
-                const introBand = scope.querySelector<HTMLElement>(".intro-band");
-
-                if (heroStory && hero && introBand) {
-                  gsap.set(heroStory, {
-                    height: "calc(100svh - 64px)",
-                    minHeight: 650,
-                    overflow: "hidden",
-                    position: "relative",
-                  });
-                  gsap.set(hero, { height: "100%", minHeight: 0 });
-                  gsap.set(introBand, {
-                    position: "absolute",
-                    right: 0,
-                    bottom: 0,
-                    left: 0,
-                    zIndex: 8,
-                    yPercent: 105,
-                  });
-
-                  const heroHandoff = gsap.timeline({
-                    defaults: { ease: "none" },
-                    scrollTrigger: {
-                      trigger: heroStory,
-                      start: "top top",
-                      end: "+=105%",
-                      pin: heroStory,
-                      scrub: 0.68,
-                      anticipatePin: 1,
-                      invalidateOnRefresh: true,
-                    },
-                  });
-
-                  heroHandoff
-                    .to(".hero-copy", { yPercent: -28, scale: 0.96, autoAlpha: 0.16 }, 0)
-                    .to(".hero-line-wrap:nth-child(odd) .hero-line", { xPercent: -7 }, 0)
-                    .to(".hero-line-wrap:nth-child(even) .hero-line", { xPercent: 6 }, 0)
-                    .to(".hero-note", { yPercent: -70, autoAlpha: 0 }, 0.04)
-                    .to(".hero-dog", { yPercent: -18, scale: 1.18 }, 0)
-                    .to(".blue-swipe", { xPercent: -9, scaleX: 1.25, scaleY: 1.06, rotate: 0 }, 0)
-                    .to(introBand, { yPercent: 0 }, 0.42)
-                    .fromTo(
-                      ".intro-band h2",
-                      { clipPath: "inset(100% 0 0 0)", y: 38 },
-                      { clipPath: "inset(0% 0 0 0)", y: 0, duration: 0.3 },
-                      0.58,
-                    )
-                    .fromTo(
-                      ".intro-band > p, .intro-paw",
-                      { autoAlpha: 0, y: 22 },
-                      { autoAlpha: 1, y: 0, duration: 0.24, stagger: 0.05 },
-                      0.68,
-                    );
-                }
-              }
-
-              if (!desktopMotion) return;
-
-              const track = scope.querySelector<HTMLElement>(".resident-track");
-              const residentSection = scope.querySelector<HTMLElement>(".residents-pin");
-              const residentViewport = scope.querySelector<HTMLElement>(".resident-scroller");
-              if (track && residentSection && residentViewport) {
-                const distance = () => Math.max(0, track.scrollWidth - residentViewport.clientWidth);
-                gsap.to(track, {
-                  x: () => -distance(),
-                  ease: "none",
                   scrollTrigger: {
-                    trigger: residentSection,
-                    start: "top 80px",
-                    end: () => `+=${Math.max(1050, distance() * 1.7)}`,
-                    pin: true,
-                    scrub: 0.62,
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
+                    trigger: element,
+                    start: "top 86%",
+                    once: true,
                   },
                 });
-              }
+              });
 
-              if (narrativeMotion) {
-                const profileStory = scope.querySelector<HTMLElement>(".profile-story");
-                const profileStage = scope.querySelector<HTMLElement>(".profile-stage");
-                const profileSection = scope.querySelector<HTMLElement>(".pet-profile");
-                const storySection = scope.querySelector<HTMLElement>(".success-section");
-                const profileSeam = scope.querySelector<HTMLElement>(".profile-seam");
+            const revealSelector = narrativeMotion
+              ? ".pet-card, .prepare-step"
+              : ".pet-card, .journey-step, .prepare-step";
 
-                if (profileStory && profileStage && profileSection && storySection && profileSeam) {
-                  gsap.set(profileStage, {
-                    height: "calc(100svh - 64px)",
-                    minHeight: 650,
-                    overflow: "hidden",
-                    position: "relative",
-                  });
-                  gsap.set(profileSection, { height: "100%", minHeight: 0 });
-                  gsap.set(storySection, {
-                    position: "absolute",
-                    inset: 0,
-                    zIndex: 12,
-                    height: "100%",
-                    clipPath: "inset(0 100% 0 0)",
-                  });
-                  gsap.set(profileSeam, { display: "block", x: 0, scaleY: 0, autoAlpha: 1 });
+            ScrollTrigger.batch(revealSelector, {
+              start: "top 90%",
+              once: true,
+              onEnter: (elements) =>
+                gsap.from(elements, {
+                  y: 36,
+                  autoAlpha: 0,
+                  duration: 0.72,
+                  stagger: 0.06,
+                  ease: "power3.out",
+                }),
+            });
+          }
 
-                  const profileHandoff = gsap.timeline({
-                    defaults: { ease: "none" },
-                    scrollTrigger: {
-                      trigger: profileStory,
-                      start: "top 64px",
-                      end: "+=115%",
-                      pin: profileStage,
-                      scrub: 0.74,
-                      anticipatePin: 1,
-                      invalidateOnRefresh: true,
-                    },
-                  });
+          const heroStage = document.querySelector<HTMLElement>(".hero-stage");
+          const heroStory = document.querySelector<HTMLElement>(".hero-story");
+          const introBand = document.querySelector<HTMLElement>(".intro-band");
 
-                  profileHandoff
-                    .to(".profile-portrait", { xPercent: -18, scale: 0.92, autoAlpha: 0.1, duration: 0.48 }, 0)
-                    .to(".profile-details", { xPercent: 22, autoAlpha: 0.08, duration: 0.48 }, 0)
-                    .to(profileSeam, { scaleY: 1, duration: 0.1 }, 0.18)
-                    .to(storySection, { clipPath: "inset(0 0% 0 0)", duration: 0.5 }, 0.26)
-                    .to(profileSeam, { x: () => Math.max(0, profileStage.clientWidth - 6), duration: 0.5 }, 0.26)
-                    .fromTo(
-                      ".story-photos",
-                      { x: 90, autoAlpha: 0 },
-                      { x: 0, autoAlpha: 1, duration: 0.3 },
-                      0.48,
-                    )
-                    .fromTo(
-                      ".success-copy",
-                      { x: 72, autoAlpha: 0 },
-                      { x: 0, autoAlpha: 1, duration: 0.3 },
-                      0.56,
-                    )
-                    .to(profileSeam, { autoAlpha: 0, duration: 0.12 }, 0.82);
-                }
+          if (narrativeMotion && heroStage && heroStory && introBand) {
+            gsap.set(heroStage, {
+              height: "calc(100svh - 64px)",
+              overflow: "hidden",
+              position: "relative",
+            });
+            gsap.set(introBand, {
+              position: "absolute",
+              right: 0,
+              bottom: 0,
+              left: 0,
+              zIndex: 8,
+            });
 
-                const journeySection = scope.querySelector<HTMLElement>(".journey-section");
-                if (journeySection) {
-                  const journeyTimeline = gsap.timeline({
-                    defaults: { ease: "none" },
-                    scrollTrigger: {
-                      trigger: journeySection,
-                      start: "top 64px",
-                      end: "+=82%",
-                      pin: true,
-                      scrub: 0.62,
-                      anticipatePin: 1,
-                    },
-                  });
-                  journeyTimeline
-                    .fromTo(".journey-line", { scaleX: 0 }, { scaleX: 1, duration: 0.68 }, 0)
-                    .fromTo(
-                      ".journey-step",
-                      { y: 34, autoAlpha: 0.22 },
-                      { y: 0, autoAlpha: 1, duration: 0.34, stagger: 0.13 },
-                      0.08,
-                    );
-                }
-              }
-            },
-          );
-          return () => media.revert();
+            const heroHandoff = gsap.timeline({
+              defaults: { ease: "none" },
+              scrollTrigger: {
+                trigger: heroStory,
+                start: "top top",
+                end: "+=115%",
+                pin: heroStage,
+                scrub: 0.75,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+              },
+            });
+
+            heroHandoff
+              .to(".hero-copy", { yPercent: -38, scale: 0.94, autoAlpha: 0.1 }, 0)
+              .to(".hero-line-wrap:nth-child(odd) .hero-line", { xPercent: -10 }, 0)
+              .to(".hero-line-wrap:nth-child(even) .hero-line", { xPercent: 8 }, 0)
+              .to(".hero-aside", { xPercent: 102 }, 0.04)
+              .to(".hero-note", { yPercent: -60, autoAlpha: 0 }, 0.04)
+              .to(".hero-dog", { yPercent: -30, scale: 1.4 }, 0)
+              .to(".blue-swipe", { xPercent: -12, scaleX: 1.38, scaleY: 1.08 }, 0)
+              .fromTo(introBand, { yPercent: 102 }, { yPercent: 0 }, 0.42)
+              .fromTo(
+                ".intro-band h2",
+                { clipPath: "inset(100% 0 0 0)", y: 42 },
+                { clipPath: "inset(0% 0 0 0)", y: 0, duration: 0.3 },
+                0.6,
+              )
+              .fromTo(
+                ".intro-band > p, .paw-scatter",
+                { autoAlpha: 0, y: 24 },
+                { autoAlpha: 1, y: 0, duration: 0.24, stagger: 0.05 },
+                0.7,
+              );
+          }
+
+          if (!desktopMotion) return;
+
+          const track = document.querySelector<HTMLElement>(".resident-track");
+          const pin = document.querySelector<HTMLElement>(".residents-pin");
+          if (track && pin) {
+            const distance = () => Math.max(0, track.scrollWidth - window.innerWidth + 96);
+            gsap.to(track, {
+              x: () => -distance(),
+              ease: "none",
+              scrollTrigger: {
+                trigger: pin,
+                start: "top 80px",
+                end: () => `+=${Math.max(900, distance() * 1.25)}`,
+                pin: true,
+                scrub: 0.7,
+                invalidateOnRefresh: true,
+              },
+            });
+          }
+
+          if (!narrativeMotion) {
+            gsap.fromTo(
+              ".journey-line",
+              { scaleX: 0 },
+              {
+                scaleX: 1,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: ".journey-grid",
+                  start: "top 70%",
+                  end: "bottom 65%",
+                  scrub: 0.6,
+                },
+              },
+            );
+          }
+
+          const fitStory = document.querySelector<HTMLElement>(".fit-story");
+          const fitStage = document.querySelector<HTMLElement>(".fit-stage");
+          const journeySection = document.querySelector<HTMLElement>(".journey-section");
+          const fitSeam = document.querySelector<HTMLElement>(".fit-seam");
+
+          if (narrativeMotion && fitStory && fitStage && journeySection && fitSeam) {
+            gsap.set(fitStage, {
+              height: "calc(100svh - 64px)",
+              overflow: "hidden",
+              position: "relative",
+            });
+            gsap.set(journeySection, {
+              position: "absolute",
+              inset: 0,
+              zIndex: 12,
+              clipPath: "inset(0 100% 0 0)",
+            });
+            gsap.set(fitSeam, { display: "block", x: 0, scaleY: 0, autoAlpha: 1 });
+
+            const fitHandoff = gsap.timeline({
+              defaults: { ease: "none" },
+              scrollTrigger: {
+                trigger: fitStory,
+                start: "top 64px",
+                end: "+=125%",
+                pin: fitStage,
+                scrub: 0.8,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+              },
+            });
+
+            fitHandoff
+              .to(".personality-copy", { xPercent: -32, autoAlpha: 0.08, duration: 0.48 }, 0)
+              .to(".rating-list", { xPercent: 34, autoAlpha: 0.08, duration: 0.48 }, 0)
+              .to(".otis-stage img", { xPercent: -14, scale: 0.9, duration: 0.48 }, 0)
+              .to(".otis-swipe", { xPercent: -18, scaleX: 0.72, rotate: -4, duration: 0.48 }, 0)
+              .to(fitSeam, { scaleY: 1, duration: 0.1 }, 0.18)
+              .to(
+                journeySection,
+                { clipPath: "inset(0 0% 0 0)", duration: 0.5 },
+                0.26,
+              )
+              .to(
+                fitSeam,
+                { x: () => Math.max(0, fitStage.clientWidth - 6), duration: 0.5 },
+                0.26,
+              )
+              .fromTo(
+                ".journey-title-wrap",
+                { x: 120, clipPath: "inset(0 100% 0 0)" },
+                { x: 0, clipPath: "inset(0 0% 0 0)", duration: 0.3 },
+                0.5,
+              )
+              .fromTo(
+                ".journey-step",
+                { x: 96, autoAlpha: 0 },
+                { x: 0, autoAlpha: 1, duration: 0.32, stagger: 0.04 },
+                0.58,
+              )
+              .fromTo(
+                ".journey-line",
+                { scaleX: 0 },
+                { scaleX: 1, duration: 0.28 },
+                0.68,
+              )
+              .to(fitSeam, { autoAlpha: 0, duration: 0.12 }, 0.8);
+          }
+        },
+      );
+
+      return () => media.revert();
         }, scope);
       } catch {
-        // The complete, readable composition is the default when motion cannot load.
         scrollTriggerRefresh.current = null;
-        motionContext?.revert();
       }
     };
+
     const frame = window.requestAnimationFrame(() => void setupMotion());
     return () => {
       disposed = true;
@@ -604,20 +598,6 @@ export function LandingPage() {
       motionContext?.revert();
     };
   }, []);
-
-  useEffect(() => () => {
-    if (profileNavigationFrame.current !== null) window.cancelAnimationFrame(profileNavigationFrame.current);
-  }, []);
-
-  const meetResident = (id: string, detail: number) => {
-    setSelectedPetId(id);
-    if (profileNavigationFrame.current !== null) window.cancelAnimationFrame(profileNavigationFrame.current);
-    profileNavigationFrame.current = window.requestAnimationFrame(() => {
-      profileHeading.current?.focus({ preventScroll: true });
-      document.getElementById("pet-profile")?.scrollIntoView({ behavior: scrollBehaviorForClick(detail), block: "start" });
-      profileNavigationFrame.current = null;
-    });
-  };
 
   const toggleFavorite = (id: string) => {
     setFavorites((current) => {
@@ -639,14 +619,15 @@ export function LandingPage() {
 
   const moveResidents = (direction: -1 | 1, detail: number) => {
     const behavior = scrollBehaviorForClick(detail);
-    if (window.matchMedia("(min-width: 900px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)").matches) {
-      window.scrollBy({ top: direction * 520, behavior });
+    if (
+      window.matchMedia(
+        "(min-width: 900px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+      ).matches
+    ) {
+      window.scrollBy({ top: direction * 480, behavior });
       return;
     }
-    const scroller = residentScroller.current;
-    if (!scroller) return;
-    const card = scroller.querySelector<HTMLElement>(".pet-card");
-    scroller.scrollBy({ left: direction * ((card?.offsetWidth ?? 320) + 28), behavior });
+    residentScroller.current?.scrollBy({ left: direction * 320, behavior });
   };
 
   const openResidentCatalog = (detail: number) => {
@@ -706,7 +687,7 @@ export function LandingPage() {
   };
 
   return (
-    <div ref={root} className="landing-page">
+    <div ref={root}>
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
@@ -876,34 +857,67 @@ export function LandingPage() {
 
       <main id="main-content">
         <div className="hero-story">
-          <section className="hero" id="top" aria-labelledby="hero-title">
-            <div className="hero-copy">
-              <p className="eyebrow">{siteCopy.discovery.heroEyebrow}</p>
-              <h1 id="hero-title" aria-label="Find your new best friend.">
-                <span className="hero-line-wrap" aria-hidden="true"><span className="hero-line">Find your</span></span>
-                <span className="hero-line-wrap" aria-hidden="true"><span className="hero-line">new best</span></span>
-                <span className="hero-line-wrap" aria-hidden="true"><span className="hero-line hero-accent">friend.</span></span>
-              </h1>
-              <p className="hero-description">{siteCopy.hero.intro}</p>
-              <div className="hero-actions">
-                <MagneticLink href="#residents">Meet the pets</MagneticLink>
-                <a className="text-link" href="#journey">How adoption works <ArrowRight aria-hidden="true" size={17} /></a>
+          <div className="hero-stage">
+            <section className="hero" id="top" aria-labelledby="hero-title">
+          <div className="hero-copy">
+            <h1 id="hero-title">
+              <span className="hero-line-wrap"><span className="hero-line">Find your</span></span>{" "}
+              <span className="hero-line-wrap"><span className="hero-line">new best</span></span>{" "}
+              <span className="hero-line-wrap"><span className="hero-line">friend.</span></span>
+            </h1>
+            <span className="marker-stroke" aria-hidden="true" />
+            <MagneticLink className="mobile-hero-cta" href="#residents">
+              Meet the pets
+            </MagneticLink>
+          </div>
+
+          <div className="hero-portrait" aria-label="Meet Milo">
+            <span className="blue-swipe" aria-hidden="true" />
+            <Image
+              className="hero-dog"
+              src="/images/hero-milo.webp"
+              alt="Milo, a joyful tan and white rescue dog"
+              fill
+              priority
+              sizes="(max-width: 760px) 100vw, 48vw"
+            />
+            <p className="hero-note">
+              Milo
+              <span>Certified sock thief</span>
+              <svg aria-hidden="true" viewBox="0 0 110 52">
+                <path d="M3 13c28-11 63-9 95 12M84 14l15 12-18 5" />
+              </svg>
+            </p>
+          </div>
+
+          <aside className="hero-aside">
+            <p className="hero-intro">{siteCopy.hero.intro}</p>
+            <MagneticLink href="#residents">Meet the pets</MagneticLink>
+            <div className="proof-cluster">
+              <div className="mini-portraits" aria-hidden="true">
+                {residents.slice(0, 3).map((pet) => (
+                  <Image key={pet.id} src={pet.image} alt="" width={48} height={48} />
+                ))}
               </div>
-              <p className="hero-footnote"><Heart aria-hidden="true" size={15} /> {siteCopy.hero.proofNote}</p>
+              <div className="proof-copy">
+                <p><strong>{siteCopy.hero.proofTitle}</strong><span>{siteCopy.hero.proofBody}</span></p>
+                <small>{siteCopy.hero.proofNote}</small>
+              </div>
             </div>
-            <div className="hero-portrait" aria-label="Meet Milo">
-              <span className="blue-swipe" aria-hidden="true" />
-              <Image className="hero-dog" src="/images/hero-milo.webp" alt="Milo, a joyful tan and white rescue dog" fill priority sizes="(max-width: 760px) 100vw, 55vw" />
-              <p className="hero-note">Milo<span>Certified sock thief</span><svg aria-hidden="true" viewBox="0 0 110 52"><path d="M3 13c28-11 63-9 95 12M84 14l15 12-18 5" /></svg></p>
-              <span className="portrait-stamp" aria-hidden="true"><PawPrint size={25} /> Big personality.<br />Very good company.</span>
-            </div>
-          </section>
-          <section className="intro-band" aria-labelledby="intro-title">
-            <span className="intro-rule" aria-hidden="true" />
-            <h2 id="intro-title">Somebody here is <em>your</em> type.</h2>
-            <p>{siteCopy.introduction.body}</p>
-            <PawPrint className="intro-paw" aria-hidden="true" size={36} />
-          </section>
+            <a className="text-link" href="#journey">
+              How adoption works <ArrowRight aria-hidden="true" size={18} />
+            </a>
+          </aside>
+            </section>
+
+            <section className="intro-band" aria-labelledby="intro-title">
+              <h2 id="intro-title">Somebody here is <em>your</em> type.</h2>
+              <p>{siteCopy.introduction.body}</p>
+              <div className="paw-scatter" aria-hidden="true">
+                <PawPrint /><PawPrint /><PawPrint />
+              </div>
+            </section>
+          </div>
         </div>
 
         <section className="residents-pin" id="residents" aria-labelledby="residents-title">
@@ -941,12 +955,41 @@ export function LandingPage() {
               </div>
             </div>
           </div>
-          <div className="resident-scroller" ref={residentScroller} aria-label="Featured residents" tabIndex={0}>
+          <div className="resident-scroller" ref={residentScroller}>
             <div className="resident-track">
-              {residents.slice(0, 5).map((pet) => <ResidentCard key={pet.id} pet={pet} saved={favorites.includes(pet.id)} onSave={toggleFavorite} onMeet={meetResident} />)}
+              {residents.slice(0, 5).map((pet, index) => {
+                const isFavorite = favorites.includes(pet.id);
+                return (
+                  <article className={`pet-card pet-card-${index + 1}`} key={pet.id}>
+                    <span className={`pet-label ${pet.color}`}>{pet.name}</span>
+                    <div className="pet-photo">
+                      <Image
+                        src={pet.image}
+                        alt={`${pet.name}, ${pet.breed}`}
+                        fill
+                        sizes="(max-width: 760px) 78vw, 320px"
+                      />
+                    </div>
+                    <div className="pet-meta"><span>{pet.age}</span><span>{pet.breed}</span></div>
+                    <h3>{pet.trait}</h3>
+                    <p>{pet.description}</p>
+                    <div className="pet-actions">
+                      <a href="#prepare">Plan a meeting</a>
+                      <button
+                        className={isFavorite ? "is-favorite" : ""}
+                        type="button"
+                        aria-label={isFavorite ? `Remove ${pet.name} from favorites` : `Save ${pet.name} to favorites`}
+                        aria-pressed={isFavorite}
+                        onClick={() => toggleFavorite(pet.id)}
+                      >
+                        <Heart aria-hidden="true" fill={isFavorite ? "currentColor" : "none"} />
+                      </button>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </div>
-          <p className="contact-sheet-note">{siteCopy.discovery.featured} <span>01 / 05</span></p>
         </section>
 
         {catalogOpen ? (
@@ -960,14 +1003,42 @@ export function LandingPage() {
               <p>{siteCopy.residents.catalogBody}</p>
             </div>
 
-            <div className="catalog-toolbar">
-              <div className="resident-filters" role="group" aria-label={siteCopy.discovery.filterLabel}>
-                {(["all", "dog", "cat"] as const).map((filter) => <button key={filter} type="button" aria-pressed={speciesFilter === filter} onClick={() => setSpeciesFilter(filter)}>{filter === "all" ? siteCopy.discovery.all : filter === "dog" ? siteCopy.discovery.dogs : siteCopy.discovery.cats}</button>)}
-              </div>
-              <p role="status">{siteCopy.discovery.results(catalogPets.length)}</p>
-            </div>
             <div className="catalog-grid">
-              {catalogPets.map((pet) => <ResidentCard key={pet.id} pet={pet} saved={favorites.includes(pet.id)} catalog onSave={toggleFavorite} onMeet={meetResident} />)}
+              {residents.map((pet, index) => {
+                const isFavorite = favorites.includes(pet.id);
+                return (
+                  <article
+                    className={`catalog-pet-card catalog-pet-card-${pet.id}`}
+                    key={pet.id}
+                    style={{ "--card-order": index } as React.CSSProperties}
+                  >
+                    <span className={`pet-label ${pet.color}`}>{pet.name}</span>
+                    <div className="pet-photo">
+                      <Image
+                        src={pet.image}
+                        alt={`${pet.name}, ${pet.breed}`}
+                        fill
+                        sizes="(max-width: 640px) 88vw, (max-width: 1120px) 30vw, 22vw"
+                      />
+                    </div>
+                    <div className="pet-meta"><span>{pet.age}</span><span>{pet.breed}</span></div>
+                    <h3>{pet.trait}</h3>
+                    <p>{pet.description}</p>
+                    <div className="pet-actions">
+                      <a href="#prepare">Plan a meeting</a>
+                      <button
+                        className={isFavorite ? "is-favorite" : ""}
+                        type="button"
+                        aria-label={isFavorite ? `Remove ${pet.name} from favorites` : `Save ${pet.name} to favorites`}
+                        aria-pressed={isFavorite}
+                        onClick={() => toggleFavorite(pet.id)}
+                      >
+                        <Heart aria-hidden="true" fill={isFavorite ? "currentColor" : "none"} />
+                      </button>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
 
             <button
@@ -981,60 +1052,30 @@ export function LandingPage() {
           </section>
         ) : null}
 
-        <div className="profile-story">
-          <div className="profile-stage">
-        <section className="pet-profile" id="pet-profile" aria-labelledby="profile-title">
-          <div className={`profile-portrait profile-portrait-${selectedPet.color}`}>
-            <div className="profile-photo">
-              <Image key={selectedPet.image} src={selectedPet.image} alt={`${selectedPet.name}, ${selectedPet.breed}`} fill sizes="(max-width: 760px) 90vw, 45vw" />
-            </div>
-            <p className="profile-handwriting">{selectedPet.trait}</p>
+        <div className="fit-story">
+          <div className="fit-stage">
+            <section className="personality-section" aria-labelledby="personality-title">
+          <div className="personality-copy reveal">
+            <h2 id="personality-title">{siteCopy.personality.title}</h2>
+            <p>{siteCopy.personality.body}</p>
+            <p className="hand-note">{siteCopy.personality.note}</p>
           </div>
-          <div className="profile-details">
-            <p className="eyebrow">{siteCopy.discovery.profileLabel}</p>
-            <h2 id="profile-title" ref={profileHeading} tabIndex={-1}>{selectedPet.name}<span aria-hidden="true">.</span></h2>
-            <p className="profile-meta">{selectedPet.age} <span aria-hidden="true">/</span> {selectedPet.breed}</p>
-            <p className="profile-bio">{selectedPet.description}</p>
-            <div className="profile-questions">
-              <h3>{siteCopy.discovery.questionsTitle}</h3>
-              <p>{siteCopy.discovery.questionsIntro}</p>
-              <ul><li>{selectedPet.question}</li><li>{siteCopy.discovery.householdQuestion}</li><li>{siteCopy.discovery.careQuestion}</li></ul>
-            </div>
-            <div className="profile-actions">
-              <button className="button-link profile-save" type="button" aria-pressed={favorites.includes(selectedPet.id)} onClick={() => toggleFavorite(selectedPet.id)}><Heart aria-hidden="true" size={18} fill={favorites.includes(selectedPet.id) ? "currentColor" : "none"} />{favorites.includes(selectedPet.id) ? siteCopy.discovery.saved(selectedPet.name) : siteCopy.discovery.save(selectedPet.name)}</button>
-              <a className="text-link" href="#prepare">{siteCopy.discovery.prepare} <ArrowRight aria-hidden="true" size={17} /></a>
-            </div>
-            <p className="profile-availability">{siteCopy.discovery.availability}</p>
-            <a className="profile-back" href="#residents"><ArrowLeft aria-hidden="true" size={16} />{siteCopy.discovery.back}</a>
+          <div className="otis-stage reveal">
+            <span className="otis-swipe" aria-hidden="true" />
+            <Image
+              src="/images/personality-otis.webp"
+              alt="Otis, a cheerful black Labrador"
+              fill
+              sizes="(max-width: 760px) 92vw, 42vw"
+            />
+            <span className="otis-label">Otis</span>
           </div>
-        </section>
+          <div className="rating-list reveal">
+            {personality.map((item) => <Rating key={item.label} {...item} />)}
+          </div>
+            </section>
 
-        <section className="success-section" id="mission" aria-labelledby="success-title">
-          <div className="story-photos reveal">
-            <figure className="story-photo before">
-              <Image src="/images/story/luna-shelter.webp" alt="Luna waiting safely at the shelter" fill sizes="280px" />
-              <figcaption>First meeting</figcaption>
-            </figure>
-            <figure className="story-photo home">
-              <Image src="/images/story/luna-home.webp" alt="Luna relaxed on a sofa at home" fill sizes="280px" />
-              <figcaption>Settling in</figcaption>
-            </figure>
-          </div>
-          <div className="success-copy">
-            <p className="eyebrow">{siteCopy.discovery.storyLabel}</p>
-            <h2 id="success-title">{siteCopy.story.title}</h2>
-            <p className="story-subtitle">{siteCopy.story.accent}</p>
-            <p>{siteCopy.story.body}</p>
-            <p>{siteCopy.mission.support}</p>
-            <button className="ink-link story-toggle" type="button" aria-expanded={storyOpen} aria-controls="introduction-advice" onClick={() => setStoryOpen((open) => !open)}>{storyOpen ? siteCopy.discovery.storyClose : siteCopy.discovery.storyOpen}<ArrowRight aria-hidden="true" size={18} /></button>
-            {storyOpen ? <p className="story-extra" id="introduction-advice">{siteCopy.story.detail}</p> : null}
-          </div>
-        </section>
-            <span className="profile-seam" aria-hidden="true" />
-          </div>
-        </div>
-
-        <section className="journey-section" id="journey" aria-labelledby="journey-title">
+            <section className="journey-section" id="journey" aria-labelledby="journey-title">
           <div className="journey-title-wrap reveal">
             <h2 id="journey-title">{siteCopy.journey.title}</h2>
             <p>{siteCopy.journey.body}</p>
@@ -1050,12 +1091,50 @@ export function LandingPage() {
                     alt=""
                     fill
                     sizes="(max-width: 760px) 70vw, 24vw"
+                    loading="eager"
+                    unoptimized
                   />
                 </div>
                 <h3>{step.title}</h3>
                 <p>{step.copy}</p>
               </article>
             ))}
+          </div>
+            </section>
+            <span className="fit-seam" aria-hidden="true" />
+          </div>
+        </div>
+
+        <section className="success-section" id="mission" aria-labelledby="success-title">
+          <div className="story-photos reveal">
+            <figure className="story-photo before">
+              <Image src="/images/story/luna-shelter.webp" alt="Luna waiting safely at the shelter" fill sizes="280px" />
+              <figcaption>First meeting</figcaption>
+            </figure>
+            <figure className="story-photo home">
+              <Image src="/images/story/luna-home.webp" alt="Luna relaxed on a sofa at home" fill sizes="280px" />
+              <figcaption>Settling in</figcaption>
+            </figure>
+          </div>
+          <div className="success-headline reveal">
+            <h2 id="success-title">{siteCopy.story.title} <span>{siteCopy.story.accent}</span></h2>
+          </div>
+          <div className="success-copy reveal">
+            <p>{siteCopy.story.body}</p>
+            <button
+              className="ink-link story-toggle"
+              type="button"
+              aria-expanded={storyOpen}
+              onClick={() => setStoryOpen((open) => !open)}
+            >
+              {storyOpen ? "Close Luna's story" : "Read Luna's story"}
+              <ArrowRight aria-hidden="true" />
+            </button>
+            {storyOpen ? (
+              <p className="story-extra">
+                {siteCopy.story.detail}
+              </p>
+            ) : null}
           </div>
         </section>
 
@@ -1103,13 +1182,15 @@ export function LandingPage() {
         </section>
 
         <section className="final-invitation" id="final-cta" aria-labelledby="final-title">
-          <div className="invitation-copy">
-            <p className="eyebrow">{siteCopy.discovery.heroNote}</p>
+          <div className="invitation-copy reveal">
+            <p className="eyebrow">Good company comes in all shapes.</p>
             <h2 id="final-title">Someone is<br />waiting for <em>you.</em></h2>
             <MagneticLink href="#residents">Meet the pets</MagneticLink>
             <p>{siteCopy.final.note}</p>
           </div>
-          <div className="invitation-portrait"><Image src="/images/final-pet-group.webp" alt="A cheerful group of rescue dogs and cats" fill sizes="(max-width: 760px) 100vw, 60vw" /></div>
+          <div className="invitation-portrait">
+            <Image src="/images/final-pet-group.webp" alt="A cheerful group of rescue dogs and cats" fill sizes="(max-width: 760px) 100vw, 60vw" />
+          </div>
         </section>
       </main>
 
@@ -1138,10 +1219,6 @@ export function LandingPage() {
           <p>© {new Date().getFullYear()} PawFriend</p>
         </div>
       </footer>
-
-      {favorites.length > 0 && !menuOpen ? (
-        <button className="mobile-shortlist-bar" type="button" hidden={shortlistMounted} aria-controls="shortlist-panel" aria-expanded={false} onClick={(event) => openShortlist(event.currentTarget, event.detail === 0)}><Heart aria-hidden="true" size={18} fill="currentColor" /><span>{siteCopy.discovery.shortlist}</span><strong>{favorites.length}</strong><ArrowRight aria-hidden="true" size={18} /></button>
-      ) : null}
 
       <p className={`status-toast ${statusMessage ? "is-visible" : ""}`} role="status" aria-live="polite">
         {statusMessage}

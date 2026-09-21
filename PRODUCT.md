@@ -30,8 +30,8 @@ This is a public, image-led marketing landing page. Visitors scan quickly, compa
 
 - Production-ready static frontend with local resident content. A verified shelter feed can replace the content layer without changing the page architecture.
 - No backend, database, authentication, CMS, API integration, admin dashboard, or adoption submission is connected in the current delivery.
-- The landing page includes navigation, hero, shelter introduction, featured resident gallery, filterable catalog, selected-resident profile, persistent shortlist dialog, adoption journey, patient-match guidance, visitor preparation, adoption FAQ, mission, final CTA, and policy-aware footer.
-- The visual experience uses a pinned hero handoff, scroll-driven resident contact sheet, profile-to-story reveal, connected journey sequence, purposeful state feedback, and calm touch/reduced-motion fallbacks.
+- The landing page includes navigation, hero, shelter introduction, featured resident gallery, expandable catalog, persistent shortlist dialog, personality profile, adoption journey, patient-match story, visitor preparation, adoption FAQ, final invitation, and policy-aware footer.
+- The visual experience uses two desktop narrative handoffs, resident travel, purposeful state feedback, and calm touch/reduced-motion fallbacks.
 - Favorites persist in local storage when available, synchronize with save/remove notices, and remain usable for the current session when storage is unavailable.
 - Production metadata includes canonical URLs, Open Graph, Twitter cards, JSON-LD, robots, sitemap, a web manifest, privacy, and accessibility pages. `NEXT_PUBLIC_SITE_URL` controls the canonical production origin.
 - Individual shelter facts, statistics, addresses, and adoption claims are not confirmed and must not be presented as verified real-world evidence.

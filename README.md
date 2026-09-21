@@ -5,9 +5,9 @@ PawFriend is a production-grade, editorial pet-adoption landing page built aroun
 ## What ships
 
 - Responsive Next.js landing page with a mobile-specific composition
-- Five-pet featured contact sheet, an expandable filterable catalog, and individual profile views
+- Five-pet featured contact sheet and an expandable nine-resident catalog
 - Persistent favorites with save/remove notifications and an accessible shortlist dialog
-- Four connected desktop scroll chapters with touch and reduced-motion fallbacks
+- Two desktop cinematic scroll handoffs with touch and reduced-motion fallbacks
 - Adoption preparation guidance, FAQ, privacy, and accessibility pages
 - Canonical metadata, Open Graph and Twitter cards, JSON-LD, robots, sitemap, and web manifest
 - Self-hosted Anton, Archivo, and Caveat fonts
