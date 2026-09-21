@@ -38,6 +38,8 @@ body {
   font-size: 16px;
   line-height: 1.5;
   overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
@@ -64,7 +66,9 @@ button {
 }
 
 a {
-  text-decoration-thickness: 1px;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: from-font;
+  text-underline-position: from-font;
   text-underline-offset: 4px;
 }
 
@@ -225,7 +229,7 @@ button {
   text-decoration: none;
   text-transform: uppercase;
   transition:
-    transform 350ms var(--ease-out),
+    transform 160ms var(--ease-out),
     color 180ms ease,
     background-color 180ms ease,
     box-shadow 240ms var(--ease-out);
@@ -289,6 +293,21 @@ button {
   letter-spacing: -0.035em;
   line-height: 0.9;
   text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.hero-intro,
+.intro-band > p,
+.residents-heading > p,
+.pet-card > p,
+.catalog-pet-card > p,
+.personality-copy > p,
+.journey-step > p,
+.success-copy > p,
+.faq-list details > p,
+.policy-title > p,
+.policy-sections p {
+  text-wrap: pretty;
 }
 
 .hero h1 {
@@ -855,7 +874,7 @@ button {
   background: #ede3d2;
   box-shadow: 0 16px 28px color-mix(in srgb, var(--ink) 14%, transparent);
   transform: rotate(-2deg);
-  transition: transform 360ms var(--ease-out), box-shadow 360ms var(--ease-out);
+  transition: transform 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
 }
 
 .pet-card:nth-child(even) {
@@ -898,7 +917,7 @@ button {
 
 .pet-photo img {
   object-fit: cover;
-  transition: transform 600ms var(--ease-out);
+  transition: transform 240ms var(--ease-out);
 }
 
 .pet-meta {
@@ -964,7 +983,7 @@ button {
   padding: 80px var(--page-gutter) 96px;
   background: var(--paper-deep);
   border-bottom: 1px solid var(--ink);
-  animation: catalog-section-in 320ms var(--ease-out) both;
+  animation: catalog-section-in 220ms var(--ease-out) both;
 }
 
 .catalog-heading {
@@ -1007,9 +1026,14 @@ button {
   background: var(--paper);
   border: 1px solid var(--ink);
   box-shadow: 8px 8px 0 color-mix(in srgb, var(--ink) 14%, var(--paper-deep));
-  animation: catalog-card-in 420ms var(--ease-out) both;
-  animation-delay: calc(var(--card-order) * 55ms);
+  animation: catalog-card-in 240ms var(--ease-out) both;
+  animation-delay: calc(var(--card-order) * 35ms);
   transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
+}
+
+.resident-catalog.is-instant,
+.resident-catalog.is-instant .catalog-pet-card {
+  animation: none;
 }
 
 .catalog-pet-card .pet-photo {
@@ -1333,7 +1357,7 @@ button {
 .journey-image img {
   object-fit: cover;
   filter: grayscale(1) contrast(1.08);
-  transition: transform 700ms var(--ease-out), filter 500ms ease;
+  transition: transform 240ms var(--ease-out), filter 180ms ease;
 }
 
 .journey-step h3 {
@@ -2046,7 +2070,9 @@ button {
   background: var(--paper);
   border: 2px solid var(--ink);
   box-shadow: 8px 8px 0 var(--orange);
-  animation: save-notice-in 480ms var(--ease-pop) both;
+  opacity: 1;
+  transform: translateY(0) rotate(0) scale(1);
+  transition: opacity 180ms ease, transform 260ms var(--ease-out);
 }
 
 .save-notice[data-action="removed"] {
@@ -2118,28 +2144,12 @@ button {
   font-size: 28px;
   line-height: 1;
   text-shadow: 2px 2px 0 var(--ink);
-  animation: save-heart-pop 620ms 120ms var(--ease-pop) both;
 }
 
-@keyframes save-notice-in {
-  from {
+@starting-style {
+  .save-notice {
     opacity: 0;
     transform: translateY(24px) rotate(1deg) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) rotate(0) scale(1);
-  }
-}
-
-@keyframes save-heart-pop {
-  from {
-    opacity: 0;
-    transform: translateY(10px) rotate(-12deg) scale(0.5);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) rotate(8deg) scale(1);
   }
 }
 

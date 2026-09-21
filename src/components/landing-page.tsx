@@ -119,6 +119,7 @@ export function LandingPage() {
   const [shortlistInstant, setShortlistInstant] = useState(false);
   const [storyOpen, setStoryOpen] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
+  const [catalogInstant, setCatalogInstant] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
   const [saveNotice, setSaveNotice] = useState<SaveNotice | null>(null);
 
@@ -632,6 +633,7 @@ export function LandingPage() {
 
   const openResidentCatalog = (detail: number) => {
     catalogScrollBehavior.current = scrollBehaviorForClick(detail);
+    setCatalogInstant(detail === 0);
     setCatalogOpen(true);
   };
 
@@ -658,7 +660,7 @@ export function LandingPage() {
       }
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
-      setStatusMessage("Sharing is unavailable. Copy the page address instead.");
+      setStatusMessage("Unable to share. Copy the page address and try again.");
     }
   };
 
@@ -682,7 +684,7 @@ export function LandingPage() {
       }
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
-      setStatusMessage("Couldn’t share the shortlist. Try copying the page address.");
+      setStatusMessage("Unable to share the shortlist. Copy the page address and try again.");
     }
   };
 
@@ -800,7 +802,7 @@ export function LandingPage() {
           <div className="shortlist-heading">
             <div>
               <p>{favoritePets.length ? `${favoritePets.length} saved` : "Your shortlist"}</p>
-              <h2 id="shortlist-title">The pets you paused for.</h2>
+              <h2 id="shortlist-title">Your saved pets.</h2>
             </div>
             <button
               ref={shortlistCloseButton}
@@ -837,7 +839,7 @@ export function LandingPage() {
             <div className="shortlist-empty">
               <Heart aria-hidden="true" />
               <h3>No pets saved yet.</h3>
-              <p>Start with the face that makes you pause. You can compare favorites here before planning a visit.</p>
+              <p>Save any pet you want to meet. Your shortlist will appear here for comparison.</p>
               <a className="button-link" href="#residents">
                 <span>Browse the residents</span>
                 <ArrowRight aria-hidden="true" />
@@ -993,7 +995,11 @@ export function LandingPage() {
         </section>
 
         {catalogOpen ? (
-          <section className="resident-catalog" id="all-residents" aria-labelledby="all-residents-title">
+          <section
+            className={`resident-catalog ${catalogInstant ? "is-instant" : ""}`}
+            id="all-residents"
+            aria-labelledby="all-residents-title"
+          >
             <div className="catalog-heading">
               <div>
                 <h2 ref={catalogHeading} id="all-residents-title" tabIndex={-1}>
@@ -1091,8 +1097,6 @@ export function LandingPage() {
                     alt=""
                     fill
                     sizes="(max-width: 760px) 70vw, 24vw"
-                    loading="eager"
-                    unoptimized
                   />
                 </div>
                 <h3>{step.title}</h3>

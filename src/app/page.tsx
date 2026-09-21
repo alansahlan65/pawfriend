@@ -19,7 +19,7 @@ export default function Home() {
         name: siteName,
         url: siteUrl.toString(),
         logo: new URL("/icon.svg", siteUrl).toString(),
-        description: "A personality-first pet adoption experience built around thoughtful matches.",
+        description: siteDescription,
       },
     ],
   };

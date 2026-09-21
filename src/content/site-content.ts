@@ -14,7 +14,7 @@ export const siteCopy = {
   },
   introduction: {
     title: "Somebody here is your type.",
-    body: "PawFriend puts personality before paperwork, so you can begin with the pets who genuinely fit your life.",
+    body: "PawFriend puts personality before paperwork, helping you find pets who fit your home and routine.",
   },
   residents: {
     title: "Meet the residents.",
@@ -25,27 +25,27 @@ export const siteCopy = {
     showFeatured: "Back to featured residents",
   },
   personality: {
-    title: "Not just cute faces.",
-    body: "Every pet has a personality. Find the one that fits yours.",
-    note: "Read the paw print →",
+    title: "More than a photo.",
+    body: "Compare energy, friendliness, independence, cuddling, and chaos before you meet.",
+    note: "Start with daily life →",
   },
   journey: {
     title: "The adoption journey.",
-    body: "Four honest steps. Zero pressure.",
+    body: "Four clear steps. No rush.",
   },
   story: {
-    title: "The right home is worth the wait.",
-    accent: "Let the quiet ones set the pace.",
-    body: "Luna did not need a perfect first impression. She needed room, repeat visits, and someone who listened to her signals.",
-    detail: "Luna watched from a quiet corner during the first hello. Sam sat nearby without rushing her. Another visit brought a cautious head bump; the next brought a lap. Their connection grew from patience, not pressure.",
+    title: "A good match can take time.",
+    accent: "Let shy pets set the pace.",
+    body: "Luna needed quiet, repeat visits, and someone who noticed when she was ready.",
+    detail: "Luna watched from a quiet corner at the first meeting. Sam sat nearby and let her choose the distance. On the next visit, Luna offered a cautious head bump. Later, she climbed into Sam’s lap.",
   },
   preparation: {
-    title: "Before Your First Hello.",
-    body: "A little preparation gives you and the pet more room to focus on the match.",
+    title: "Before your first hello.",
+    body: "A little preparation leaves more time to focus on the pet in front of you.",
   },
   faq: {
-    title: "Good questions are part of a good match.",
-    body: "The practical details matter. Bring them into the conversation early.",
+    title: "Ask before you adopt.",
+    body: "Care, fees, housing rules, and introductions are easier to plan before you decide.",
   },
   featured: {
     label: "Personality snapshot",
@@ -59,16 +59,16 @@ export const siteCopy = {
   },
   final: {
     title: "Someone is waiting for you.",
-    note: "Save a few favorites and build a shortlist that feels right.",
+    note: "Save the pets you want to meet, then compare your shortlist.",
   },
   notifications: {
-    savedLabel: "Tiny victory.",
-    savedMessage: (name: string) => `${name} joined your shortlist.`,
-    removedLabel: "Shortlist updated.",
-    removedMessage: (name: string) => `${name} was removed.`,
+    savedLabel: "Saved.",
+    savedMessage: (name: string) => `${name} is now on your shortlist.`,
+    removedLabel: "Removed.",
+    removedMessage: (name: string) => `${name} is no longer on your shortlist.`,
   },
   footer: {
-    tagline: "Personality-first pet adoption, made for thoughtful matches.",
+    tagline: "Meet pets by personality. Plan the first visit with care.",
     disclosure: "Pet profiles and availability can change. Confirm the details before planning your visit.",
   },
 } as const;
@@ -190,7 +190,7 @@ export const journey = [
   {
     number: "03",
     title: "Come say hello.",
-    copy: "Our team helps with the practical details and an honest fit check.",
+    copy: "Shelter staff can explain the practical details and help check the fit.",
     image: "/images/story/journey-hello-color.webp",
   },
   {
@@ -204,18 +204,18 @@ export const journey = [
 export const preparationSteps = [
   {
     number: "01",
-    title: "Save your matches.",
-    copy: "Use the heart on any resident. Your shortlist stays ready when you return.",
+    title: "Save your favorites.",
+    copy: "Select the heart on any pet to keep a shortlist on this device.",
   },
   {
     number: "02",
-    title: "Compare real life.",
-    copy: "Think about energy, routine, space, other pets, and who shares your home.",
+    title: "Compare daily life.",
+    copy: "Consider energy, routines, space, other pets, and everyone at home.",
   },
   {
     number: "03",
     title: "Bring your questions.",
-    copy: "Ask about care, history, fees, introductions, and what support comes next.",
+    copy: "Write down what you need to know about care, history, fees, introductions, and follow-up support.",
   },
 ] as const;
 
@@ -223,17 +223,17 @@ export const adoptionFaqs = [
   {
     question: "Can I meet more than one pet?",
     answer:
-      "Often, yes. Start with a shortlist and ask the shelter team which order will be most comfortable for the animals available that day.",
+      "Ask the shelter. They can confirm which pets are available and whether meeting more than one is appropriate that day.",
   },
   {
     question: "What should I bring to a visit?",
     answer:
-      "Bring every household decision-maker, a clear picture of your weekly routine, and any rental or housing rules that may affect adoption.",
+      "Bring everyone involved in the decision, notes about your weekly routine, and any rental or housing rules that may affect adoption.",
   },
   {
     question: "Do I need to decide the same day?",
     answer:
-      "No. A thoughtful match matters more than a fast one. Use the visit to ask honest questions and notice how the pet responds at their own pace.",
+      "Ask what decision timeline applies and whether the shelter can hold a pet. Use the visit to ask questions and notice how the pet responds at their own pace.",
   },
   {
     question: "What do adoption fees cover?",
