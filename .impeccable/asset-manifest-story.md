@@ -152,3 +152,23 @@ Color palette: Chestnut, black, and white coat; muted dark gray-blue car; soft g
 Constraints: Preserve the dog identity, expression, car-window composition, road, trees, portrait aspect ratio, and documentary character. No text or watermark.
 Avoid: Saturated color, cinematic grading, illustration, added objects, costume, signage.
 ```
+
+## journey-hello-color.png
+
+- Purpose: color source for journey step 03. CSS presents this source in grayscale until hover.
+- Dimensions: 1536 × 1024 px
+- Edit target: `public/images/story/journey-hello.webp`
+- Prompt:
+
+```text
+Use case: lighting-weather
+Asset type: color source photograph for the hover state of journey step 03
+Primary request: Colorize the provided black-and-white animal shelter exterior into a natural, restrained color photograph.
+Input image: The black-and-white shelter exterior is the edit target.
+Subject: The same animal shelter building, porch, windows, landscaping, and curved driveway.
+Style/medium: Realistic documentary architectural photography with believable materials.
+Lighting/mood: Soft blue-hour daylight with warm interior light, welcoming and calm.
+Color palette: Muted deep brown and charcoal siding, warm cream window light, natural dark green shrubs and trees, neutral concrete, subtle blue-gray sky.
+Constraints: Preserve the building, crop, perspective, porch columns, windows, landscaping, driveway, lighting layout, and aspect ratio. No people, pets, text, logos, borders, or watermark.
+Avoid: Recomposition, added or removed elements, a different building, oversaturation, cinematic orange-and-teal grading, illustration.
+```

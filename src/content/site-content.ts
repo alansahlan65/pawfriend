@@ -191,7 +191,7 @@ export const journey = [
     number: "03",
     title: "Come say hello.",
     copy: "Our team helps with the practical details and an honest fit check.",
-    image: "/images/story/journey-hello.webp",
+    image: "/images/story/journey-hello-color.webp",
   },
   {
     number: "04",
