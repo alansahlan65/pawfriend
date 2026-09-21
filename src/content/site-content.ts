@@ -7,7 +7,7 @@ export const navigation = [
 
 export const siteCopy = {
   hero: {
-    intro: "Big personalities. Small bios. One very good reason to meet.",
+    intro: "Meet the personalities behind the paws. Find a familiar kind of weird, save a few favorites, and take it from there.",
     proofTitle: "Start with fit.",
     proofBody: "Save the pets who feel like your kind of weird.",
     proofNote: "Your shortlist stays on this device.",
@@ -17,12 +17,39 @@ export const siteCopy = {
     body: "PawFriend puts personality before paperwork, so you can begin with the pets who genuinely fit your life.",
   },
   residents: {
-    title: "Meet the residents.",
-    body: "Five very different reasons to leave with fur on your clothes.",
+    title: "Find your kind of company.",
+    body: "A few faces to start with. Open a profile, get to know the personality, and save the ones you want to meet.",
     catalogTitle: "All residents.",
     catalogBody: "Take your time. Compare personalities, save the ones who fit, and bring your questions to the first meeting.",
     viewAll: (count: number) => `View all ${count} residents`,
     showFeatured: "Back to featured residents",
+  },
+  discovery: {
+    eyebrow: "A face. A personality. A possibility.",
+    featured: "The introduction sheet",
+    all: "Everyone",
+    dogs: "Dogs",
+    cats: "Cats",
+    filterLabel: "Browse residents by animal",
+    results: (count: number) => `${count} ${count === 1 ? "resident" : "residents"} to get to know`,
+    profileLabel: "A little more about",
+    bioLabel: "A note from the profile",
+    questionsTitle: "Could your everyday fit?",
+    questionsIntro: "Bring these questions to the shelter. A good match starts with a conversation.",
+    householdQuestion: "How should introductions to children or other pets be handled?",
+    careQuestion: "What care, costs, and support should I plan for?",
+    availability: "Confirm current availability, care needs, and household fit with the shelter before visiting.",
+    prepare: "Prepare for a visit",
+    back: "Back to the residents",
+    meet: (name: string) => `Meet ${name}`,
+    save: (name: string) => `Save ${name}`,
+    saved: (name: string) => `${name} is saved`,
+    shortlist: "View shortlist",
+    storyLabel: "Our approach to adoption",
+    storyOpen: "Make space for a slow hello",
+    storyClose: "Close introduction advice",
+    heroEyebrow: "Personality-first pet adoption",
+    heroNote: "Good company comes in all shapes.",
   },
   personality: {
     title: "Not just cute faces.",
@@ -34,17 +61,17 @@ export const siteCopy = {
     body: "Four honest steps. Zero pressure.",
   },
   story: {
-    title: "The right home is worth the wait.",
+    title: "Good things take a little patience.",
     accent: "Let the quiet ones set the pace.",
-    body: "Luna did not need a perfect first impression. She needed room, repeat visits, and someone who listened to her signals.",
-    detail: "Luna watched from a quiet corner during the first hello. Sam sat nearby without rushing her. Another visit brought a cautious head bump; the next brought a lap. Their connection grew from patience, not pressure.",
+    body: "A first meeting is only a beginning. Give a pet room to approach, notice their signals, and leave time for another hello.",
+    detail: "Ask the shelter team how the pet likes to meet new people. A quiet place, a familiar toy, or a shorter visit may help. Let the team guide introductions and talk through what settling in could look like at home.",
   },
   preparation: {
-    title: "Make the first hello count.",
+    title: "Before Your First Hello.",
     body: "A little preparation gives you and the pet more room to focus on the match.",
   },
   faq: {
-    title: "Good questions are part of a good match.",
+    title: "Good questions. Honest answers.",
     body: "The practical details matter. Bring them into the conversation early.",
   },
   featured: {
@@ -76,6 +103,9 @@ export const siteCopy = {
 export const residents = [
   {
     id: "milo",
+    species: "dog",
+    observation: "Tennis balls, fast zoomies, and a soft heart.",
+    question: "How much daily play and training helps Milo settle?",
     name: "Milo",
     image: "/images/residents/milo.webp",
     age: "2 years",
@@ -86,6 +116,9 @@ export const residents = [
   },
   {
     id: "luna",
+    species: "cat",
+    observation: "A sunny window and one favorite lap.",
+    question: "How does Luna prefer to meet someone new?",
     name: "Luna",
     image: "/images/residents/luna.webp",
     age: "3 years",
@@ -96,6 +129,9 @@ export const residents = [
   },
   {
     id: "pepper",
+    species: "dog",
+    observation: "Small paws. A particular interest in puddles.",
+    question: "What routine and training is Pepper learning?",
     name: "Pepper",
     image: "/images/residents/pepper.webp",
     age: "1 year",
@@ -106,6 +142,9 @@ export const residents = [
   },
   {
     id: "otis",
+    species: "dog",
+    observation: "Long walks, new friends, and snack breaks.",
+    question: "What does a comfortable daily walk look like for Otis?",
     name: "Otis",
     image: "/images/residents/otis.webp",
     age: "4 years",
@@ -116,6 +155,9 @@ export const residents = [
   },
   {
     id: "nori",
+    species: "cat",
+    observation: "A chair thief with an acrobatic streak.",
+    question: "What play and enrichment does Nori enjoy at home?",
     name: "Nori",
     image: "/images/residents/nori.webp",
     age: "2 years",
@@ -126,6 +168,9 @@ export const residents = [
   },
   {
     id: "miso",
+    species: "dog",
+    observation: "Blankets, quiet confidence, and dinner on time.",
+    question: "What home routine helps Miso feel comfortable?",
     name: "Miso",
     image: "/images/residents/miso.webp",
     age: "4 years",
@@ -136,6 +181,9 @@ export const residents = [
   },
   {
     id: "archie",
+    species: "dog",
+    observation: "Gentle hellos and a preference for staying close.",
+    question: "How does Archie feel about time alone?",
     name: "Archie",
     image: "/images/residents/archie.webp",
     age: "2 years",
@@ -146,6 +194,9 @@ export const residents = [
   },
   {
     id: "poppy",
+    species: "dog",
+    observation: "Curious ears and plenty of enthusiasm.",
+    question: "How does Poppy balance activity with quiet time?",
     name: "Poppy",
     image: "/images/residents/poppy.webp",
     age: "1 year",
@@ -156,6 +207,9 @@ export const residents = [
   },
   {
     id: "ruby",
+    species: "dog",
+    observation: "Car rides and a favorite window view.",
+    question: "What does Ruby need to feel settled in a new home?",
     name: "Ruby",
     image: "/images/residents/ruby.webp",
     age: "5 years",

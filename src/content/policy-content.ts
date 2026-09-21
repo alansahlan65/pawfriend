@@ -46,7 +46,7 @@ export const accessibilityStatement = {
     {
       title: "Motion and input",
       body: [
-        "Cinematic scrolling is limited to larger screens with a fine pointer. Touch devices use normal page flow, and the experience removes pinned motion when your device requests reduced motion.",
+        "Cinematic scroll storytelling is limited to larger screens with a fine pointer. Touch devices use normal page flow, and the experience removes pinned and directional movement when your device requests reduced motion.",
         "Every primary task, including browsing pets, saving favorites, opening the shortlist, reading FAQs, and sharing, is available without hover.",
       ],
     },

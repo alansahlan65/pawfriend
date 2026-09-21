@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { isIndexable, siteDescription, siteName, siteUrl } from "@/lib/site";
 import "./globals.css";
+import "./discovery.css";
 
 const display = localFont({
   src: "./fonts/anton-latin.woff2",

@@ -167,15 +167,15 @@ Supporting type is intentionally optical rather than a rigid four-step product s
 
 The page is a sequence of full-width editorial bands separated by ink rules. Desktop compositions use asymmetric two-, three-, and four-column grids, interrupted by cutout portraits and overlapping contact prints. The global gutter is `spacing.page-gutter`; the global vertical rhythm is `spacing.section-space`. Square surfaces, clipped swipes, slight card rotations, and deliberate overlaps create the printed-contact-sheet grammar.
 
-The first viewport is non-negotiable: exact headline “Find your new best friend,” oversized Milo portrait, handwritten personality note, proof cluster, and one dominant “Meet the pets” action. The approved form is the pinned contact-sheet direction identified by seed `6c948c11`.
+The first viewport is non-negotiable: exact headline “Find your new best friend,” one explanatory sentence, one dominant “Meet the pets” action, an oversized Milo portrait, and a handwritten personality note. The approved imagery remains the contact-sheet direction identified by seed `6c948c11`.
 
 Responsive behavior is designed in tiers:
 
-- Above 1120px, the hero is a three-part poster: headline, portrait, orange decision rail.
-- At 1120px and below, the hero becomes a two-column portrait composition with the orange rail as a horizontal band; dense three-column sections reduce cleanly.
-- Below 900px, navigation becomes a native button-controlled menu, the hero stacks, a primary CTA moves directly under the headline, residents and journey steps become horizontal snap scrollers, the full catalog becomes two columns before collapsing to one, and closing sections become single-column.
-- At 520px and below, the duplicate CTA in the orange rail is removed, the proof cluster stacks to prevent collision, portrait and print sizes tighten, and touch targets remain at least 44px.
-- Desktop pinned residents and connected journey progress run only from 900px on hover-capable fine pointers; touch layouts always scroll normally.
+- Above 1120px, the hero is a two-part poster that pins for a cinematic handoff into the editorial introduction.
+- At 1120px and below, the two-column composition tightens while keeping the action attached to the headline.
+- Below 900px, navigation becomes a native button-controlled menu, the hero retains its poster relationship as space permits, and the complete catalog becomes two columns before collapsing to one.
+- Below 640px, the hero stacks, portrait and print sizes tighten, journey imagery drops out, and touch targets remain at least 44px.
+- Fine-pointer desktop layouts translate the featured resident contact sheet from vertical page scroll; arrows advance the same sequence. Touch, keyboard, and reduced-motion layouts retain native horizontal browsing.
 
 **The Band-and-Break Rule.** Build rhythm with full-width bands and intentional subject overlap, not nested containers floating in empty space.
 
@@ -209,25 +209,21 @@ The header is a 64px sticky ink bar with a condensed PawFriend wordmark, centere
 
 ### Resident Contact Cards
 
-Resident cards are 320px square-cornered paper prints with 16px padding, a square portrait, a slightly rotated colored name label, compact pet metadata, a personality-led title, and a real favorite button using `aria-pressed`. Desktop cards alternate small rotations and lift on hover; mobile cards remove vertical staggering and snap horizontally.
+Resident cards pair a slightly rotated square-cornered paper print with an aligned information block, a colored name label, compact metadata, a personality-led observation, a profile action, and a real favorite button using `aria-pressed`. The photograph may rotate; card copy and controls remain aligned for comparison.
 
-Five residents form the authored horizontal contact sheet. “View all 9 residents” expands a separate equal-height catalog grid: three columns on wide screens, two below 900px, and one below 640px. Opening the catalog moves focus to its heading and scrolls it into view; closing restores focus and returns to the featured gallery.
+Five residents form the authored horizontal contact sheet. Fine-pointer desktop scroll drives the sheet sideways through a pinned chapter; touch and reduced-motion layouts use native horizontal scrolling. “View all 9 residents” expands a separate catalog grid with all, dog, and cat filters: three columns on wide screens, two below 900px, and one below 640px. Opening the catalog moves focus to its heading and scrolls it into view; closing restores focus and returns to the featured gallery. Opening a resident profile updates the profile spread and moves focus to its heading.
 
-### Portrait Proof Cluster
+### Resident Profile
 
-Three overlapping circular portraits support the message “Start with fit.” The accompanying copy explains the local shortlist rather than presenting an unverified shelter total. On narrow screens, the portraits and copy reflow without competing with the primary CTA.
+The selected-resident spread pairs one large portrait with the pet's existing profile description and three questions to bring to the shelter. It presents no inferred fit score. It reminds visitors to confirm availability, care needs, and household fit before visiting.
 
 ### Shortlist and Save Feedback
 
 Favorite hearts persist to local storage when available and remain session-usable when storage fails. Saving or removing a pet triggers a compact portrait-led status notice with polite live-region output. The saved-pet drawer is an `aria-modal` dialog with an outside-dismiss backdrop, body scroll lock, focus containment, Escape dismissal, empty and populated states, disabled sharing when empty, native share support, clipboard fallback, and reliable focus restoration to desktop or mobile launchers.
 
-### Personality Matrix
-
-The matrix pairs plain-language traits with five paw icons. Filled paws use ink; empty paws use a quiet ink mix. The row itself remains readable text, and the group exposes an accessible “x out of 5” label.
-
 ### Adoption Journey
 
-Four numbered steps sit on an ink field. Desktop uses a lime connecting line and four-column photo sequence; journey photographs begin in black and white and reveal color only on hover. Mobile removes the connector and becomes a horizontal snap scroller. The interaction never hides the step title or practical copy.
+Four numbered steps sit on an ink field in normal document flow. Desktop uses a four-column photo sequence; journey photographs begin in black and white and reveal color only on hover. Mobile removes the decorative images and presents a compact numbered list. The interaction never hides the step title or practical copy.
 
 ### Imagery and Provenance
 
@@ -237,9 +233,9 @@ Generation provenance is durable: the approved comp prompt and structural transl
 
 ### Motion, Truth, and Metadata
 
-GSAP and ScrollTrigger load asynchronously after the critical interface, then run inside `gsap.context()` plus `gsap.matchMedia()` and clean up on unmount or media-query change. The page has exactly two narrative handoffs. First, the desktop hero pins while the headline and Milo exit upward at different rates, the blue portrait swipe expands, and the paper intro rises from the bottom seam like the next page of the shelter zine. Second, the personality section holds while its copy, Otis, and the rating matrix part sideways; a lime editorial seam travels across the viewport and reveals the black adoption-journey contact sheet from left to right. Its heading, steps, and connector then resolve in the same horizontal reading direction. The change in axis keeps the two scenes distinct while the paper, ink, highlighter, and portrait language makes them one journey. The closing spread remains static so the final decision is never delayed by another pinned scene. Resident travel is secondary supporting motion, not a narrative handoff.
+GSAP and ScrollTrigger load asynchronously after the critical interface, run inside `gsap.context()` plus `gsap.matchMedia()`, and clean up on unmount or media-query change. The desktop narrative has four connected chapters: the hero pins while Milo and the poster typography part to reveal the introduction; the resident contact sheet pins while vertical scroll drives the portraits sideways; the selected profile parts around a lime seam as patient-introduction guidance wipes into view; and the adoption journey pins while its rule and four steps resolve in sequence. The final invitation remains static so the page ends on a stable decision.
 
-Narrative pinning runs only at `(min-width: 1121px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)`. The resident gallery and standalone journey connector keep their existing 900px fine-pointer threshold where the cinematic handoff is unavailable. Touch, narrower layouts, and reduced-motion paths remain in normal document flow with every panel visible; changing the OS motion preference causes GSAP media conditions to revert rather than requiring a reload. Reduced-motion CSS preserves short color and state feedback rather than globally killing every transition. Lenis is not part of this system.
+The hero, profile, and journey chapters run only at `(min-width: 1121px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)`. The resident contact sheet begins at 900px with the same pointer and motion guards. Touch, narrower layouts, and reduced-motion paths render the complete composition in normal flow. Reduced-motion CSS preserves short color and state feedback while dropping decorative movement. Lenis is not part of this system.
 
 Resident profiles and stories are local content until a verified shelter source replaces them, so the persuasive journey must not lean on invented totals, addresses, contact details, outcomes, or success rates. Keep the footer reminder that profiles and availability can change, and make the rest of the page useful on its own. Controls must do what they say: favorites persist locally, the shortlist has empty, saved, remove, disabled, focus-managed, and share states, story disclosure opens, resident controls scroll, the complete catalog expands and collapses, FAQs use native disclosure, share uses the native share sheet or clipboard fallback, and anchor CTAs navigate correctly across pinned sections. Preserve semantic sections, heading order, meaningful alt text, skip link, live status feedback, high-contrast affordances, WCAG 2.2 AA contrast, 44px touch minimum, and production metadata for canonical URLs, Open Graph, Twitter, JSON-LD, robots, sitemap, manifest, viewport, and theme color.
 
@@ -250,7 +246,7 @@ Resident profiles and stories are local content until a verified shelter source 
 - **Do** preserve the thesis that every pet is a person, not inventory.
 - **Do** keep “Meet the pets” as the obvious primary outcome within five seconds and show it directly below the headline on mobile.
 - **Do** use portrait-led asymmetry, hard editorial seams, square paper surfaces, and restrained handwritten notes.
-- **Do** gate pinned scrolling, magnetic response, and heavy parallax to fine-pointer desktop contexts.
+- **Do** gate pinned storytelling, horizontal scroll translation, and magnetic response to fine-pointer desktop contexts.
 - **Do** make the complete experience readable and operable with motion disabled, touch input, or keyboard input.
 - **Do** avoid invented proof, retain the discreet footer reminder that profile details and availability should be confirmed, and preserve prompt provenance for every generated raster.
 
