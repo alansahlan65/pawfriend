@@ -1,8 +1,8 @@
 export const navigation = [
   { label: "Meet the pets", href: "#residents" },
   { label: "How it works", href: "#journey" },
-  { label: "Before you visit", href: "#prepare" },
   { label: "Our mission", href: "#mission" },
+  { label: "Before you visit", href: "#prepare" },
 ] as const;
 
 export const siteCopy = {
